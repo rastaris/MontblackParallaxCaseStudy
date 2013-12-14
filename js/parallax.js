@@ -75,9 +75,10 @@
 	var bottomPositionInBrowserWindow;
 	var animationClasses, animationType, animationValue, animationStartInstant, animationEndInstant;
 	var initialStateClass, initialStateTop, initialStateLeft, initialStateScaleX, initialStateScaleY;
-	var auxClasses, auxStrings, auxInitialState, auxWidth, auxHeight, auxTop, auxLeft, auxCorrection; 
+	var auxClasses, auxStrings, auxInitialState, auxWidth,auxFinalWidth, auxHeight, auxFinalHeight, auxTop, auxLeft, auxCorrection; 
 	var k, kLen;
 	var previousScrollTop = 0, isAnimatingPageScroll = false; 
+	var iTransitions, iTransitionsLen;
 	
 	/*-----------------------------------------------------------------------------------*/
 	
@@ -382,7 +383,7 @@
 			 translateY(el, initialStateTop, animationCurrentInstant, animationValue, animationStartInstant, animationEndInstant);
 			  break;
 		  case "scale":
-			 scale(el,  initialStateScaleX, initialStateScaleY, animationCurrentInstant, animationValue, animationStartInstant, animationEndInstant);
+			 scaleSmart(el,  initialStateScaleX, initialStateScaleY, animationCurrentInstant, animationValue, animationStartInstant, animationEndInstant);
 			  break;
 		
 		}
@@ -448,6 +449,36 @@
 		    });
 	}
 	
+	
+	function scaleSmart(el,  initialStateScaleX, initialStateScaleY, animationCurrentInstant, animationValue, animationStartInstant, animationEndInstant) {
+				
+			auxWidth= getPropertyValueForPercentageBasedTransformations(initialStateScaleX, animationValue, animationCurrentInstant, animationStartInstant, animationEndInstant);
+			auxHeight= getPropertyValueForPercentageBasedTransformations(initialStateScaleY, animationValue, animationCurrentInstant, animationStartInstant, animationEndInstant);
+			executeCSSTransition(el,[["width",auxWidth +"px"], ["height", auxHeight +"px"]]);
+	}
+	
+	function getPropertyValueForPercentageBasedTransformations(initialState, animationFinalPercentage, currentInstant, startInstant, endInstant) {
+		
+		// Calculate Final Value
+		var auxFinalValue = initialState * animationFinalPercentage/100;
+		var auxPredictedValue = initialState + (auxFinalValue - initialState)/100 * currentInstant;
+		
+		// Making sure the Animation executes only within the defined interval
+		if (currentInstant >= startInstant && currentInstant <= endInstant) {
+			// Normalize current instant according to the Animation Interval
+			currentInstant = startInstant + (endInstant-startInstant)*(currentInstant/100);
+			auxPredictedValue = initialState + (auxFinalValue - initialState)/100 * currentInstant;
+		}
+		else if (currentInstant < startInstant) {
+			auxPredictedValue = initialState;
+		}
+		else if  (currentInstant > endInstant) {
+			auxPredictedValue =  auxFinalValue;
+		}
+		
+		return auxPredictedValue;
+	}
+	
 	// Scale Transformation
 	// Considers only reductions
 	// CSS Restriction 1: WIDTH must be defined in css class of the element
@@ -455,6 +486,7 @@
 	function scale(el,  initialStateScaleX, initialStateScaleY, animationCurrentInstant, animationValue, animationStartInstant, animationEndInstant) {
 		// Limit animation boundaries (with correction o values to make sure animations go from start to end always)
 		auxWidth = initialStateScaleX - initialStateScaleX * Math.round(((animationCurrentInstant-animationStartInstant)/(animationEndInstant-animationStartInstant)*animationValue))/100;
+		
 		if (auxWidth > initialStateScaleX) {
 			auxWidth = initialStateScaleX;
 		}
@@ -471,13 +503,31 @@
 		}
 		
 		// Apply Transformations
-	    el.css("transition", TRANSITION_STRING);
+		executeCSSTransition(el,[["width",auxWidth +"px"], ["height", auxHeight +"px"]]);
+				
+	   /* el.css("transition", TRANSITION_STRING);
 	    el.css("width", auxWidth +"px");
 	    el.css("height", auxHeight +"px");
 	    el.on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function(){
 		      // Remove the transition property
 		      el.css("transition", "none");
 		    });
+		 */
+	}
+	
+	
+	// Execute CSS Transition
+	function executeCSSTransition(el, propertyValuePairArray) {
+		  el.css("transition", TRANSITION_STRING);
+		  // Aply All transitions
+		  for (iTransitions=0, iTransitionsLen= propertyValuePairArray.length; iTransitions < iTransitionsLen; iTransitions++){
+			  //alert(propertyValuePairArray[iTransitions][0] +"   -    " + propertyValuePairArray[iTransitions][1]);
+			  el.css(propertyValuePairArray[iTransitions][0], propertyValuePairArray[iTransitions][1]);
+		  }
+		  el.on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function(){
+			      // Remove the transition property
+			      el.css("transition", "none");
+		  });
 	}
 
 	/*

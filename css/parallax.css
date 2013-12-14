@@ -1,0 +1,19 @@
+html, body{ height: 100%; }
+.parallax-window {
+	position:relative;
+	overflow: hidden;
+	width: 100%;
+}
+
+.parallax-element,
+.parallax-element *
+{
+	position:absolute;
+}
+.parallax-element {
+	width:100%;
+	height: 100%;
+	top:0px;
+	left:0px;
+}
+

@@ -1,0 +1,195 @@
+
+/*
+ *
+ * HOME SECTION
+ *
+ */
+
+.mb-section-home,
+.mb-separator-slogan {
+	background-repeat: no-repeat;
+	background-position:center;
+}
+
+.mb-section-home {
+	background-color: #090909;
+	background-image: url("../imgs/branding/logo-full.png");
+	height: 90%;
+	background-position: center 40px;
+	background-size: auto 75%;
+}
+
+/*
+ *
+ * SERVICES SECTION
+ *
+ */
+
+.mb-section-services {
+	height: 70%;
+	margin-top: -71px;
+	
+}
+
+.mb-parallax-element-lemons {
+	background-image: url("../imgs/cocktails/cocktail-kiwi.jpg");
+	background-repeat:no-repeat;
+	background-size: 100%;
+	height: 160%;
+	width: 100%;
+	top:4%;
+	left:0%;
+}
+
+.mb-parallax-element-content-type-1 * { 
+	top: 20px; left: -500px;
+}
+.mb-parallax-element-content-type-1 h1 { 
+	font-size: 60px;
+}
+
+/*
+ *
+ * DRINKS SECTION
+ *
+ */
+
+
+/*
+ *
+ * IMPRESSIONS SECTION
+ *
+ */
+
+.mb-section-impressions {
+	height: 100%;
+	background-image: url("../imgs/impressionSectionBG.png");
+	background-size: 100%;
+}
+
+/*
+ *
+ * FRIENDS SECTION
+ *
+ */
+ 
+ /*
+ *
+ * CONTACTS SECTION
+ *
+ */
+
+
+.mb-section-services2 {
+	height: 400px;
+}
+
+.mb-separator-slogan {
+	background-image: url("../imgs/branding/slogan.png");
+	height:143px;
+	margin-top: -71px;
+	position:relative;
+	z-index: 1;
+}
+
+
+.mb-section-black {
+	background-color: #000;
+	color: #fff;
+}
+
+.mb-section-white {
+	background-color: #fff;
+	color: #000;
+}
+
+/*
+ * -------------------------------- *
+ * -------------------------------- *
+ * - XS Devices  - Phones (@media(max-width:767px) - bootstrap definition) 
+ * -------------------------------- *
+ * -------------------------------- *
+ */
+
+@media(max-width:767px) and (orientation:portrait) {
+
+	.mb-section-home {
+		 background-image: url("../imgs/branding/logo-skull.png");
+		 background-size: auto 90%;
+		 background-position: center 10px;
+		 /*background-color: red;*/
+		 /*height: 90%;*/
+ 	}
+	
+	.mb-separator-slogan {
+		background-image: url("../imgs/branding/slogan.png");
+		background-size: auto 100%;
+		height:100px;
+		margin-top: -50px;
+	}
+	
+	.mb-section-services {
+		margin-top: -50px;
+		background-position: center;
+		background-size: 100%;
+		width:100%;
+		/*height: 60%;*/
+	}	
+}
+
+@media(max-width:767px) and (orientation:landscape) {
+	
+	.mb-section-home {
+		background-size: auto 80%;
+		background-position: center 10px;
+		/*
+		max-height: 270px; 
+		min-height: 250px;
+		
+		background-color: orange;
+		*/
+	}
+	
+	.mb-separator-slogan {
+		background-image: url("../imgs/branding/slogan.png");
+		background-size: auto 100%;
+		height:70px;
+		margin-top: -35px;
+	}
+	
+    .mb-section-services {
+    	/*height: 300px;*/
+		margin-top: -35px;
+	}	
+
+}
+
+/* 
+ * -------------------------------- *
+ * -------------------------------- *
+ * - S Devices - Tablet
+ * -------------------------------- *
+ * -------------------------------- *
+ */
+  
+@media(min-width:768px){
+	.mb-section-logo {
+		/*background-color: yellow;*/
+	}
+}
+
+
+/* L Devices -  Small Laptops - Tablets Landscape */
+@media(min-width:992px){
+	.mb-section-logo {
+		/*background-color: green;*/
+	}
+}
+
+/* XL Devices - Computer Screens */
+@media(min-width:1200px){
+	.mb-section-logo {
+		/*background-color: blue;*/
+	}
+	
+}

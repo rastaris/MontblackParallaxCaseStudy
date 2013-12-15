@@ -9,6 +9,10 @@ html, body{ height: 100%; }
 .parallax-element *
 {
 	position:absolute;
+	transform: rotate(45deg);
+	transform-origin:50% 50%;
+	-ms-transform-origin:50% 50%; /* IE 9 */
+	-webkit-transform-origin:50% 50%; /* Safari and Chrome */
 }
 .parallax-element {
 	width:100%;

@@ -457,6 +457,16 @@
 			executeCSSTransition(el,[["width",auxWidth +"px"], ["height", auxHeight +"px"]]);
 	}
 	
+	/*
+	 * 
+	 * Getting a tranformed value based on a percentage base transformation
+	 * -----------------------------------------------------------------------------------------------------------
+	 * Corrects and normalizes current instant according to the animation interval defined
+	 * currentInstant = 0 means that the Parallax Window just entered the screen
+	 * curentInstant = 100 means that the Parallax Window just left the screen or the document reached its end
+	 *   
+	 */
+	
 	function getPropertyValueForPercentageBasedTransformations(initialState, animationFinalPercentage, currentInstant, startInstant, endInstant) {
 		
 		// Calculate Final Value

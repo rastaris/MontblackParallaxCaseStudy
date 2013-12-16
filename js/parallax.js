@@ -72,6 +72,17 @@
 	
 	// Aux Variables
 	var i, j, iLen, jLen;
+	var prlxWindow, prlxElement, prlxWindowOffset,scrollPosition;
+	
+	// Animation Variables
+	var bottomPositionInBrowserWindow;
+	var animationClasses, animationType, animationValue, animationStartInstant, animationEndInstant;
+	var initialStateClass, initialStateTop, initialStateLeft, initialStateScaleX, initialStateScaleY;
+	var auxClasses, auxStrings, auxInitialState, auxWidth, auxHeight, auxTop, auxLeft, auxCorrection; 
+	var k, kLen;
+	var previousScrollTop = 0, isAnimatingPageScroll = false; 
+	
+	
 	var iTransitions, iTransitionsLen;
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -304,19 +315,21 @@
 	// 100 - parallaxWindow just entered/left the viewport through the TOP (absolute end of the animation)
 	function getAnimationInstant(parallaxWindow) {
 		
+		var val;
+		
 		// Document size allows the parallax window to LEAVE and ENTER the screen
 		// Through the top and bottom
 		// Animation Time is Normalized  
 
 		if(allowsScreenEntranceAndExitThroughTop(parallaxWindow) && allowsScreenEntranceAndExitThroughBottom(parallaxWindow)) {
-			return mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), parallaxWindow.offset().top, parallaxWindow.offset().top + parallaxWindow.height() + $(window).innerHeight(), 0, 100) ;
+			val = mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), parallaxWindow.offset().top, parallaxWindow.offset().top + parallaxWindow.height() + $(window).innerHeight(), 0, 100) ;
 		} 
 		
 		// Document size does NOT allow the parallax window to LEAVE or ENTER the screen
 		// Animation Time Should be Normalized
 		
 		else if(!allowsScreenEntranceAndExitThroughTop(parallaxWindow) && !allowsScreenEntranceAndExitThroughBottom(parallaxWindow)) {
-			return mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), $(window).innerHeight(), $(document).height(), 0, 100);
+			val = mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), $(window).innerHeight(), $(document).height(), 0, 100);
 		}
 		
 		
@@ -325,7 +338,7 @@
 		// Animation Time Should be Normalized
 
 		else if(allowsScreenEntranceAndExitThroughTop(parallaxWindow)) {
-			return mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), $(window).innerHeight(), parallaxWindow.offset().top + parallaxWindow.height()+$(window).innerHeight(), 0, 100) ;
+			val = mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), $(window).innerHeight(), parallaxWindow.offset().top + parallaxWindow.height()+$(window).innerHeight(), 0, 100) ;
 		}
 		
 		// Document size allows the parallax window to LEAVE and ENTER the screen
@@ -333,11 +346,12 @@
 		// Animation Time Should be Normalized
 		
 		else if(allowsScreenEntranceAndExitThroughBottom(parallaxWindow)) {
-			return mapValueBetweenPositiveIntervals(window.pageYOffset+$(window).innerHeight(), parallaxWindow.offset().top, $(document).height(), 0, 100);
+			val = mapValueBetweenPositiveIntervals(window.pageYOffset+$(window).innerHeight(), parallaxWindow.offset().top, $(document).height(), 0, 100);
 		}
 		
-		else { return 100; /*final state*/ }
-		
+		else { val = 100; /*final state*/ }
+		//$(".debug").text(val);
+		return val;
 	}
 	
 	// Functions that check if a 
@@ -369,7 +383,7 @@
 		}
 		
 		var k = (value-minOrigin) / (maxOrigin-minOrigin);
-		return roundNumber(minDestination + k*(maxDestination-minDestination),0);
+		return minDestination + k*(maxDestination-minDestination);
 		
 	}
 	
@@ -436,6 +450,7 @@
 			 * 
 			 */
 			
+			//$(".debug").text(currentInstant);
 			var auxValue = getPropertyValueForPercentageBasedTransformations(el, initialState[1], currentInstant, animation.percentageValue, animation.startInstant, animation.endInstant, animation.reference);
 			elementAnimationsArray[i] = [animation.cssProperty , auxValue + "px"];
 
@@ -460,25 +475,19 @@
 		var auxPredictedValue; 
 		var initialStateInt = parseInt(initialState);
 		
-		// Making sure the Animation executes only within the defined interval
-		if (currentInstant >= startInstant && currentInstant <= endInstant) {
-			// Normalize current instant according to the Animation Interval
-			currentInstant = startInstant + (endInstant-startInstant)*(currentInstant/100);
-		}
+
 		
-		//alert(referenceDimension);
-		
+		currentInstant = (currentInstant - startInstant)*100 / (endInstant-startInstant);
 		switch(referenceDimension) {
 		
 			case "self":
 				auxFinalValue = initialStateInt * animationFinalPercentage/100;
-				auxPredictedValue = initialStateInt + (auxFinalValue - initialStateInt)/100 * parseInt(currentInstant);
+				auxPredictedValue = initialStateInt + (auxFinalValue - initialStateInt)/100 * currentInstant;
 				auxPredictedValue = applyIntervalCorrection(currentInstant,initialStateInt,startInstant,endInstant, auxPredictedValue, auxFinalValue);
 				break;
 				
 			case "parent_width":
 				auxFinalValue = initialStateInt  + parseInt(el.parent().attr(PARALLAX_WINDOW_INITIAL_WIDTH)) * animationFinalPercentage/100;
-				//alert(auxFinalValue);
 				auxPredictedValue = initialStateInt + (auxFinalValue - initialStateInt)/100 * currentInstant;
 				auxPredictedValue = applyIntervalCorrection(currentInstant,initialStateInt, startInstant,endInstant, auxPredictedValue, auxFinalValue);
 				break;
@@ -489,10 +498,8 @@
 				auxPredictedValue = applyIntervalCorrection(currentInstant,initialStateInt,startInstant,endInstant, auxPredictedValue, auxFinalValue);
 				break;
 			
-			default: //self
-				auxFinalValue = initialStateInt * animationFinalPercentage/100;
-				auxPredictedValue = initialStateInt + (auxFinalValue - initialStateInt)/100 * currentInstant;
-				auxPredictedValue = applyIntervalCorrection(currentInstant,initialStateInt,startInstant,endInstant, auxPredictedValue, auxFinalValue);
+			default: 
+				alert("Reference dimension for animation is not defined");
 				break;
 		
 		}
@@ -502,13 +509,34 @@
 	
 	function applyIntervalCorrection(currentInstant,initialStateInt,startInstant,endInstant, auxPredictedValue, auxFinalValue) {
 		
+		
+		
+		if(auxFinalValue-initialStateInt >= 0) {
+			if(auxPredictedValue >auxFinalValue) {
+				return auxFinalValue;
+			}
+			else if (auxPredictedValue<initialStateInt) {
+				return initialStateInt;
+			}
+		}
+		else {
+			if(auxPredictedValue <auxFinalValue) {
+				return auxFinalValue;
+			}
+			else if (auxPredictedValue>initialStateInt) {
+				return initialStateInt;
+			}
+		}
+		/*
+		
 		if (currentInstant < startInstant) {
 			return initialStateInt;
 		}
 		else if  (currentInstant > endInstant) {
 			return auxFinalValue;
 		}
-		
+		*/
+
 		return auxPredictedValue;
 	}
 	

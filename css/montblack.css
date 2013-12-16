@@ -19,6 +19,13 @@
 	background-size: auto 75%;
 }
 
+footer {
+	background-color: #090909;
+	height:5%;
+	padding:0.5%%;
+	text-align: center;
+	}
+
 /*
  *
  * SERVICES SECTION
@@ -37,13 +44,23 @@
 	background-size: 100%;
 	height: 160%;
 	width: 100%;
-	top:4%;
+	top:0%;
 	left:0%;
 }
 
-.mb-parallax-element-content-type-1 * { 
-	top: 20px; left: -500px;
+.mb-parallax-element-debug-top * { 
+	top: 0%; 
+	left: 5%;
+	
+	
 }
+.mb-parallax-element-debug-bottom * { 
+	top: 90%; 
+	left: 5%;
+	
+	
+}
+
 .mb-parallax-element-content-type-1 h1 { 
 	font-size: 60px;
 }

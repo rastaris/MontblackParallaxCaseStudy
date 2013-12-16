@@ -72,15 +72,6 @@
 	
 	// Aux Variables
 	var i, j, iLen, jLen;
-	var prlxWindow, prlxElement, prlxWindowOffset,scrollPosition;
-	
-	// Animation Variables
-	var bottomPositionInBrowserWindow;
-	var animationClasses, animationType, animationValue, animationStartInstant, animationEndInstant;
-	var initialStateClass, initialStateTop, initialStateLeft, initialStateScaleX, initialStateScaleY;
-	var auxClasses, auxStrings, auxAnimationInitialStates, auxWidth,auxFinalWidth, auxHeight, auxFinalHeight, auxTop, auxLeft, auxCorrection; 
-	var k, kLen;
-	var previousScrollTop = 0, isAnimatingPageScroll = false; 
 	var iTransitions, iTransitionsLen;
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -123,7 +114,7 @@
 		for (var j=0; j< prlxElements.length;j++) {
 			var prlxElement = $(prlxElements[j]);
 			var idNumber = i.toString() + j.toString();
-			var idClass = "." + PARALLAX_CLASS_ELEMENT_ID_PREFIX + idNumber;
+			var idClass = PARALLAX_CLASS_ELEMENT_ID_PREFIX + idNumber;
 			
 			// Add Id Class to DOM
 			prlxElement.addClass(idClass);
@@ -135,10 +126,9 @@
 			if(coreFunctions.isDefined(elementAnimations)) {
 				for (var k=0; k < elementAnimations.length; k++) {
 					var animationParameters = getAnimationDefinitionValues(elementAnimations[k]);
-					// TODO: TRIAL THE UNITY (PX,EM,WHATEVER, and Store it) r
+					// TODO: EVALUATE ADDING UNIT VS TRIAL UNIT PROGRAMMATICALY THE UNITY (PX,EM,WHATEVER, and Store it) r
 					// At the moment the engine will assume the unit is always PX
 					$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)];
-					//alert($parallaxElementsInitialStates[idNumber][k][0] + " " + $parallaxElementsInitialStates[idNumber][k][1]);
 				}
 			}
 		}
@@ -163,25 +153,8 @@
 		// TODO: //REDO FULL HEIGHT PARADIGM (STILL MAKES SENSE- Especialy for phones in portrait) height(100%) width(100%)
 		// Need to force Height Though
 		else {
-			/*win.children(parallaxElementClass).each(function () {
-				alert("sWinWidth:" + $(window).innerWidth() + "PwinW:"  + win.width() + " Element w:" +$(this).width());
-				if(win.width() == $(this).width()) {
-					$(this).width()
-					} 
-				});
-				*/
-				//win.height($(window).innerHeight());
-			//}
+
 		}
-		
-		/*win.css("transition", TRANSITION_FAST_STRING);
-	    win.css("width", $(window).innerWidth()+"px");
-	    win.on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function(){
-		      // Remove the transition property
-		      win.css("transition", "none");
-		    });
-		 */
-		//win.width($(window).innerWidth());
 	}
 	
 	
@@ -330,52 +303,74 @@
 	// 0   - parallaxWindow just entered/left the viewport through the BOTTOM (absolute begining of the animation)
 	// 100 - parallaxWindow just entered/left the viewport through the TOP (absolute end of the animation)
 	function getAnimationInstant(parallaxWindow) {
-		// Calculate the position of the parallaxWindow within the browser window
-		bottomPositionInBrowserWindow =  parallaxWindow.offset().top + parallaxWindow.height() - window.pageYOffset;
 		
-		// Document size allows the parallax window to leave the screen
+		// Document size allows the parallax window to LEAVE and ENTER the screen
 		// Through the top and bottom
-		// Condittion: The following 2
-		// Animation Time is Normalized by default 
-		// [0..100] corresponds to [0..100]
+		// Animation Time is Normalized  
 
-		// TODO: WRITE CODE AND TEST 
+		if(allowsScreenEntranceAndExitThroughTop(parallaxWindow) && allowsScreenEntranceAndExitThroughBottom(parallaxWindow)) {
+			return mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), parallaxWindow.offset().top, parallaxWindow.offset().top + parallaxWindow.height() + $(window).innerHeight(), 0, 100) ;
+		} 
 		
-		// Document size allows the parallax window to leave the screen		
+		// Document size does NOT allow the parallax window to LEAVE or ENTER the screen
+		// Animation Time Should be Normalized
+		
+		else if(!allowsScreenEntranceAndExitThroughTop(parallaxWindow) && !allowsScreenEntranceAndExitThroughBottom(parallaxWindow)) {
+			return mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), $(window).innerHeight(), $(document).height(), 0, 100);
+		}
+		
+		
+		// Document size allows the parallax window to LEAVE and ENTER the screen		
 		// Through the top 
-		// Condition: if( $(document).height() >= parallaxWindow.offset().top + parallaxWindow.height() + window.innerHeight)
 		// Animation Time Should be Normalized
-		// [x..100] corresponds to [0..100]
 
-		// TODO: WRITE CODE AND TEST
+		else if(allowsScreenEntranceAndExitThroughTop(parallaxWindow)) {
+			return mapValueBetweenPositiveIntervals(window.pageYOffset + $(window).innerHeight(), $(window).innerHeight(), parallaxWindow.offset().top + parallaxWindow.height()+$(window).innerHeight(), 0, 100) ;
+		}
 		
-		// Document size allows the parallax window to leave the screen
+		// Document size allows the parallax window to LEAVE and ENTER the screen
 		// Through the bottom  
-		// Condition:
 		// Animation Time Should be Normalized
-		// [0..x] corresponds to [0..100]
 		
-		// TODO: WRITE CODE AND TEST
-		
-		// Document size does not allow the parallax window to leave the screen
-		// Condition:
-		// Animation Time Should be Normalized
-		// [x..y] corresponds to [0..100]
-		
-		// TODO: WRITE CODE AND TEST
-		
-		if( $(document).height() >= parallaxWindow.offset().top + parallaxWindow.height() + window.innerHeight) {
-			return 100 - Math.round(bottomPositionInBrowserWindow/(window.innerHeight+parallaxWindow.height())*100);
+		else if(allowsScreenEntranceAndExitThroughBottom(parallaxWindow)) {
+			return mapValueBetweenPositiveIntervals(window.pageYOffset+$(window).innerHeight(), parallaxWindow.offset().top, $(document).height(), 0, 100);
 		}
-		// Document size does NOT allow the parallax window to leave the screen
-		// Correct Values
-		else
-		{	
-			bottomPositionInBrowserWindow =  $(document).height() - window.pageYOffset;
-			if (100 - ((bottomPositionInBrowserWindow - window.innerHeight) / parallaxWindow.height()) *100 <0 ) { return 0; }
-			else { return Math.round(100 - ((bottomPositionInBrowserWindow - window.innerHeight) / parallaxWindow.height()) *100);}
+		
+		else { return 100; /*final state*/ }
+		
+	}
+	
+	// Functions that check if a 
+	// the document size (height) allows 
+	// a ParallaxWindow to enter/leave the screen
+	// either trough the top or bottom of the browser window
+	
+	function allowsScreenEntranceAndExitThroughTop(parallaxWindow) {
+		
+		return  $(document).height() >= parallaxWindow.offset().top + parallaxWindow.height() + $(window).innerHeight();
+		
+	}
+	
+	function allowsScreenEntranceAndExitThroughBottom(parallaxWindow) {
+		
+		return  parallaxWindow.offset().top >= $(window).innerHeight();
+		
+	}
+	
+	// Map a value from one interval to another
+	
+	function mapValueBetweenPositiveIntervals(value, minOrigin, maxOrigin, minDestination, maxDestination) {
+		
+		if (value<minOrigin) {
+			return 0;
 		}
-
+		if(value>maxOrigin) {
+			return 100;
+		}
+		
+		var k = (value-minOrigin) / (maxOrigin-minOrigin);
+		return roundNumber(minDestination + k*(maxDestination-minDestination),0);
+		
 	}
 	
 	// Animate Element 
@@ -383,10 +378,10 @@
 	// DOM restriction: elements will only animate if they have one or more animations defined
 	function animateParallax(el, currentInstant) {
 				
+		
 		// Get Initial State Set
 		var animationInitialStates = $parallaxElementsInitialStates[getParallaxElementId(el)];
 		var animationSetString = el.attr(ANIMATION_DATA);
-		
 		if (coreFunctions.isDefined(animationInitialStates) && coreFunctions.isDefined(animationSetString)){
 			var animationSet = animationSetString.split(";");
 			animateElement(el, currentInstant, animationInitialStates, animationSet);
@@ -471,7 +466,7 @@
 			currentInstant = startInstant + (endInstant-startInstant)*(currentInstant/100);
 		}
 		
-		alert(referenceDimension);
+		//alert(referenceDimension);
 		
 		switch(referenceDimension) {
 		
@@ -483,7 +478,7 @@
 				
 			case "parent_width":
 				auxFinalValue = initialStateInt  + parseInt(el.parent().attr(PARALLAX_WINDOW_INITIAL_WIDTH)) * animationFinalPercentage/100;
-				alert(auxFinalValue);
+				//alert(auxFinalValue);
 				auxPredictedValue = initialStateInt + (auxFinalValue - initialStateInt)/100 * currentInstant;
 				auxPredictedValue = applyIntervalCorrection(currentInstant,initialStateInt, startInstant,endInstant, auxPredictedValue, auxFinalValue);
 				break;
@@ -567,5 +562,12 @@
 		//alert("w: " + window.innerWidth + " ::: h:" + window.innerHeight + " ori: " + (window.innerHeight > window.innerWidth));
 		return (window.innerHeight > window.innerWidth) ? "portrait" : "landscape";
 	}
+	
+	//REMOVE
+	function roundNumber(rnum, rlength) { // Arguments: number to round, number of decimal places
+		  return Math.round(rnum*Math.pow(10,rlength))/Math.pow(10,rlength);
+
+		}
+	
 	
 })(jQuery);

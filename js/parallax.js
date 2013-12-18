@@ -10,14 +10,9 @@
  
 (function($) {
 	
-	/*-----------------------------------------------------------------------------------*/
-	/*
-	 * 
-	 * Constants 
-	 * 
-	 * 
-	 */
-	/*-----------------------------------------------------------------------------------*/
+	// -----------------------------------------------------------------------------------*/
+	// CONSTANTS
+	// -----------------------------------------------------------------------------------*/
 	
 	// Parallax CSS Classes
 	var PARALLAX_CLASS_WINDOW = ".parallax-window";   
@@ -47,22 +42,22 @@
 	var PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT = "data-window-initial-width-portrait";     //SECTION DO IT FOR ALL SECTIONS NOT JUST PARALLAX WINDOWS
 	var PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT = "data-window-initial-height-portrait";
 	var PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE = "data-window-initial-width-landscape";     //SECTION DO IT FOR ALL SECTIONS NOT JUST PARALLAX WINDOWS
-	var PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE = "data-window-initial-height-landscape";
+	var PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE = "data-window--height-landscape";
 	
-	/*-----------------------------------------------------------------------------------*/
+	// -----------------------------------------------------------------------------------*/
 	/*
-	 * 
 	 * Vars 
 	 * * Defined out off the functions in order to
 	 * * to minimize the use of garbage collector
-	 * 
 	 */
-	/*-----------------------------------------------------------------------------------*/
+	// -----------------------------------------------------------------------------------*/
 	
 	var auxIdClass;
 	
 	// Register Parallax Windows    		
-	var $parallaxRegistry = $(PARALLAX_CLASS_WINDOW);
+	var $parallaxWindowRegistry = $(PARALLAX_CLASS_WINDOW);
+	var $parallaxWindowAnimationPreviousInstant = new Array();
+	var isFirstRegistration = true;
 	
 	// Register for Parallax Elements InitialStates
 	var $parallaxElementsInitialStates = new Array();
@@ -72,130 +67,247 @@
 	
 	// Aux Variables
 	var i, j, iLen, jLen;
-	var prlxWindow, prlxElement, prlxWindowOffset,scrollPosition;
+	var prlxWindow, prlxElement;
 	
 	// Animation Variables
-	var bottomPositionInBrowserWindow;
-	var animationClasses, animationType, animationValue, animationStartInstant, animationEndInstant;
 	var initialStateClass, initialStateTop, initialStateLeft, initialStateScaleX, initialStateScaleY;
 	var auxClasses, auxStrings, auxInitialState, auxWidth, auxHeight, auxTop, auxLeft, auxCorrection; 
 	var k, kLen;
-	var previousScrollTop = 0, isAnimatingPageScroll = false; 
-	
-	
 	var iTransitions, iTransitionsLen;
 	
-	/*-----------------------------------------------------------------------------------*/
 	
-	/*
-	 * 
-	 * Parallax Windows and Parallax Element Registration Routine
-	 * 
-	 */
+	// Initialize the Parallax Engine
+	init();
 	
-	for (var i=0; i<$parallaxRegistry.length;i++){
-		// The Window 
-		var prlxWindow = $parallaxRegistry[i];
+	// Funtion init
+	function init () {
+		registerParallaxInfo();
 		
-		// Calulate Height for Parallax Windows with Full Width Images in the BG 
-		setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
-
-		// Register initial size of the window
-		$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH, $(prlxWindow).width());
-		$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT, $(prlxWindow).height());
+		//$('body, html').animate({scrollTop:500}, '1000', 'swing', function() { 
+			   //alert("Finished animating");
+		//	});
+	}
+	
+	// Parallax Windows and Parallax Element Registration Routine
+	
+	function registerParallaxInfo() {
+		var referenceValue;
+		var newReferenceValue;
+		//$parallaxWindowRegistry = $(PARALLAX_CLASS_WINDOW);
 		
-		
-		
-		// To prevent resizing in Android (fixes glich when $(window).innerHeight() changes due to the url bar showing or not)
-		if(DEVICE_IS_ANDROID) {
-			//Store Initial Height and Width of each window 
-			if (DEVICE_ORIENTATION == "portrait") {
-				$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT, $(prlxWindow).width());
-				$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT, $(prlxWindow).height());
+		for (var i=0; i<$parallaxWindowRegistry.length;i++){
+			// The Window 
+			var prlxWindow = $($parallaxWindowRegistry[i]);
+			
+			// Calulate Height for Parallax Windows with Full Width Images in the BG 
+			setParallaxWindowMissingDimensionForFullImg(prlxWindow);
+	
+			// Register initial size of the window
+			prlxWindow.attr(PARALLAX_WINDOW_INITIAL_WIDTH, prlxWindow.width());
+			prlxWindow.attr(PARALLAX_WINDOW_INITIAL_HEIGHT,prlxWindow.height());
+			
+			
+			// To prevent resizing in Android (fixes glich when $(window).innerHeight() changes due to the url bar showing or not)
+			if(DEVICE_IS_ANDROID) {
+				//Store Initial Height and Width of each window 
+				if (DEVICE_ORIENTATION == "portrait") {
+					prlxWindow.attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT, prlxWindow.width());
+					prlxWindow.attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT,prlxWindow.height());
+				}
+				else if (DEVICE_ORIENTATION == "landscape") {
+					prlxWindow.attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE,prlxWindow.width());
+					prlxWindow.attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE,prlxWindow.height());
+				} 
 			}
-			else if (DEVICE_ORIENTATION == "landscape") {
-				$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE, $(prlxWindow).width());
-				$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE, $(prlxWindow).height());
-			} 
-		}
-		
-		// The Elements
-		var prlxElements = $(prlxWindow).children(PARALLAX_CLASS_ELEMENT);
-		
-		for (var j=0; j< prlxElements.length;j++) {
-			var prlxElement = $(prlxElements[j]);
-			var idNumber = i.toString() + j.toString();
-			var idClass = PARALLAX_CLASS_ELEMENT_ID_PREFIX + idNumber;
 			
-			// Add Id Class to DOM
-			prlxElement.addClass(idClass);
+			// The Elements
+			var prlxElements = prlxWindow.children(PARALLAX_CLASS_ELEMENT);
 			
-			// Store Initial States for each property that is animated in the element
-			$parallaxElementsInitialStates[idNumber] = new Array();
-			var elementAnimations = getAllAnimationsForElement(prlxElement);
+			for (var j=0; j< prlxElements.length;j++) {
+				var prlxElement = $(prlxElements[j]);
+				var idNumber = i.toString() + j.toString();
+				var idClass = PARALLAX_CLASS_ELEMENT_ID_PREFIX + idNumber;
+				
+				// Store Initial States for each property that is animated in the element
+				if (isFirstRegistration) {
+					// Add Id Class to DOM
+					prlxElement.addClass(idClass);
+					$parallaxElementsInitialStates[idNumber] = new Array();
+				}
+				
+				var elementAnimations = getAllAnimationsForElement(prlxElement);
+				
+				if(coreFunctions.isDefined(elementAnimations)) {
+				
+					for (var k=0; k < elementAnimations.length; k++) {
+						var animationParameters = getAnimationDefinitionValues(elementAnimations[k]);
+						
+						// TODO: EVALUATE ADDING UNIT VS TRIAL UNIT PROGRAMMATICALY THE UNITY (PX,EM,WHATEVER, and Store it) r
+						// At the moment the engine will assume the unit is always PX
+						
+						//	$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), 0];
+						
+						switch(animationParameters.reference) {
+							
+							case "none":
+								
+								if (isFirstRegistration) {
+									referenceValue = -1;
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+								}
+								// Do Nothing (TODO: study this case deeper with examples)
+								
+								break;
+								
+							case "self": 
+								//this is doing self width TODO: create self height
+								if (isFirstRegistration) {
+									referenceValue = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxElement.width();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+									
+								}  
+								else {
+									// prlxElement.width(); CANT BE used (it's not % anymore, its px and set by the animation, has to be recalculated
+									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
+									newReferenceValue = referenceValue * prlxWindow.width();
+									$parallaxElementsInitialStates[idNumber][k] = new Array(animationParameters.cssProperty, newReferenceValue, referenceValue);
+									
+								}
+								
+								
+								break;
+								
+							case "parent_width":
+								
+								if (isFirstRegistration) {
+									// The Percentage corresponding to the  Initial State of the 
+									// elements (cssProperty) within the Parent Window Width
+									referenceValue = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxWindow.width();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+								
+								}
+								else {
+									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
+									newReferenceValue = referenceValue * prlxWindow.width();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newReferenceValue, referenceValue];
+									
+								}
+	
+								break;
+							
+							case "parent_height":
+								
+								if (isFirstRegistration) {
+									// The Percentage corresponding to the  Initial State of the 
+									// elements (cssProperty) within the Parent Window Height
+									referenceValue = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxWindow.height();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+								
+								}
+								else {	
+									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
+									newReferenceValue = referenceValue * prlxWindow.height();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newReferenceValue, newReferenceValue];
+								}
+	
+								break;
+								
+								
+							
+							default: 
+								alert("Reference dimension for animation is not defined");
+								break;
+						
+						}
+						
+					}
 			
-			if(coreFunctions.isDefined(elementAnimations)) {
-				for (var k=0; k < elementAnimations.length; k++) {
-					var animationParameters = getAnimationDefinitionValues(elementAnimations[k]);
-					// TODO: EVALUATE ADDING UNIT VS TRIAL UNIT PROGRAMMATICALY THE UNITY (PX,EM,WHATEVER, and Store it) r
-					// At the moment the engine will assume the unit is always PX
-					$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)];
 				}
 			}
-		}
-	}
-	
-	// Setting Parallax Window Missing Dimension (height or width, accordding to which shall be primarily full)
-	function setParallaxWindowMissingDimensionForFullImg(win, anim) {
-		// Calculate Height For Full Width Image
-		if(coreFunctions.isDefined(win.attr(PARALLAX_DATA_WINDOW_BG_IMG_FULL_WIDTH))) {
-			win.css("background-repeat", "no-repeat");
-			
-			if(win.attr(PARALLAX_DATA_WINDOW_BG_IMG_FULL_WIDTH) && win.attr(PARALLAX_DATA_WINDOW_BG_FILE_WIDTH) && win.attr(PARALLAX_DATA_WINDOW_BG_FILE_HEIGHT)) 
-			{
-			    win.css("transition", ANIMATION_TRANSITION_FAST);
-			    win.css("height", $(window).innerWidth()*win.attr(PARALLAX_DATA_WINDOW_BG_FILE_HEIGHT)/win.attr(PARALLAX_DATA_WINDOW_BG_FILE_WIDTH) +"px");
-			    win.on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function(){
-				      // Remove the transition property
-				      win.css("transition", "none");
-				    });
-			}
-		}
-		// TODO: //REDO FULL HEIGHT PARADIGM (STILL MAKES SENSE- Especialy for phones in portrait) height(100%) width(100%)
-		// Need to force Height Though
-		else {
 
 		}
+	
+		if(isFirstRegistration) {
+			isFirstRegistration = false;
+		} else {  render(); }
+		
+		
 	}
 	
 	
-	// Gets the ID that provides access to the initial states
-	function getParallaxElementId(el) {
-		auxIdClass= el.attr('class');
-		if(auxIdClass.indexOf(PARALLAX_CLASS_ELEMENT_ID_PREFIX)!= -1) {
-			auxIdClass= auxIdClass.substring(auxIdClass.indexOf(PARALLAX_CLASS_ELEMENT_ID_PREFIX));
-			auxIdClass= auxIdClass.substring(PARALLAX_CLASS_ELEMENT_ID_PREFIX.length);
+	// Render Function
+	// We will render only on scroll
+	// This is because our animation functions take care of smoothness (so no need for 60fps)
+	
+	$(window).scroll(function () { render(); });
+	
+	function render() {
+		
+		/* I want to animate scroll step
+		    $('body').css("transition", TRANSITION_SCROLLBAR_STRING);
+		    $('body').css("margin-top", -sT +"px");
+		    $('body').on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function(){
+				      // Remove the transition property
+			   		   $('body').css("transition", "none");
+			   		   isAnimatingPageScroll = false;
+				    });
+		    var strTop = $('body').css("margin-top").toString();
+		    //alert(strTop.substring(0,strTop.length-2));
+		    $(window).scrollTop(strTop);
+		*/
+		
+		
+	//	alert("render" + $parallaxElementsInitialStates[10][0][1]);
+		
+		// Loop through Parallax Windows
+		for (i=0, iLen=$parallaxWindowRegistry.length; i<iLen; i++) {
+			// The Window 
+			prlxWindow = $parallaxWindowRegistry[i];
 			
-			return auxIdClass;
-		}
+			// Iterate each Parallax Elment Inside that Window
+			 $elementRegistry = $(prlxWindow).children(PARALLAX_CLASS_ELEMENT);
+			 for (j=0, jLen=$elementRegistry.length; j<jLen; j++) {
+				// Animate Element
+				prlxElement = $elementRegistry[j];				
+				animateParallax($(prlxElement), getAnimationInstant($(prlxWindow)));
+
+			}
+		}	
 	}
+	
+	function sleep(milliseconds) {
+		  var start = new Date().getTime();
+		  for (var i = 0; i < 1e7; i++) {
+		    if ((new Date().getTime() - start) > milliseconds){
+		      break;
+		    }
+		  }
+		}
 	
 	// Resize Function
 	// This function is mostly dedicated to android browsers ( avoid unwanted document sizes generated by 
 	// the browser url Bar (that appears and disapears changing the window size)
 	// The one component that is not dedicated to android only, is : setParallaxWindowMissingDimensionForFullImg($(prlxWindow)); 
-	// TODO: Clean the code in this function
-	// Try not to declare vars inside (because of the garbage collector)
-	// not fully solved (when changing orientation with the url bar gone, the dimension % is bigger than when the bar ispresent)
+	// TODO: 
+	// 	  - Clean the code in this function
+	// 	  - Try not to declare vars inside (because of the garbage collector)
+	//    - not fully solved (when changing orientation with the url bar gone, the dimension % is bigger 
+	//		than when the bar is present, so the content becomes to big for when the bar is present)   
 	
 	$(window).resize(function() {
+		
+		
+		//
+		// Android Resizing Corrections (overcome UX leak, resulting from the Broser URL Bar
+		//
+		
 		//Has Device Orientation Changed ? 
 		DEVICE_ORIENTATION_CHANGED = (DEVICE_ORIENTATION != getCurrentDeviceOrientation());
-		//alert(DEVICE_ORIENTATION_CHANGED);
+
 		// Fix Dimensions ParallaxWindows
-		for (var i=0; i<$parallaxRegistry.length;i++){
+		for (var i=0; i<$parallaxWindowRegistry.length;i++){
 			// The Window 
-			var prlxWindow = $parallaxRegistry[i];
+			var prlxWindow = $parallaxWindowRegistry[i];
 			
 			//IF ANDROID && DEVICE ORIENTATION DOES NOT CHANGE
 			if(DEVICE_IS_ANDROID && !DEVICE_ORIENTATION_CHANGED) {
@@ -252,18 +364,13 @@
 							 setParallaxWindowMissingDimensionForFullImg($(prlxWindow)); // not needed here i believe
 							 //alert("applying android LANDSCAPE initial state")
 						}
-					    
-					/*$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE, $(window).innerWidth());
-				    $(prlxWindow).width($(window).innerWidth());
-				    setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
-				    $(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE, $(prlxWindow).height());
-				    */
 				}
 			}
 			// Making sure FullScreen Elements do not occupy more or less space than they need
 			else  { 
 				setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
 			}
+			
 			//prlxWindow.width($(window).innerWidth());
 		}
 		// After all elements are fixed (if the fix resulted from android and orientation changed)
@@ -272,47 +379,59 @@
 			DEVICE_ORIENTATION = getCurrentDeviceOrientation();
 		}
 		
+		
+		//
+		// Re-Register Parallax info (overwrite initial animation values)
+		//
+		
+		registerParallaxInfo();
+
+		
 	});
 	
-	// Render Function
-	// We will render only on scroll
-	// This is because our animation functions take care of smoothness (so no need for 60fps)
-	$(window).scroll(function () {
-		
-		/* I want to animate scroll step
-		    $('body').css("transition", TRANSITION_SCROLLBAR_STRING);
-		    $('body').css("margin-top", -sT +"px");
-		    $('body').on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function(){
+	// Setting Parallax Window Missing Dimension (height or width, accordding to which shall be primarily full)
+	function setParallaxWindowMissingDimensionForFullImg(win, anim) {
+		// Calculate Height For Full Width Image
+		if(coreFunctions.isDefined(win.attr(PARALLAX_DATA_WINDOW_BG_IMG_FULL_WIDTH))) {
+			win.css("background-repeat", "no-repeat");
+			
+			if(win.attr(PARALLAX_DATA_WINDOW_BG_IMG_FULL_WIDTH) && win.attr(PARALLAX_DATA_WINDOW_BG_FILE_WIDTH) && win.attr(PARALLAX_DATA_WINDOW_BG_FILE_HEIGHT)) 
+			{
+			    win.css("transition", ANIMATION_TRANSITION_FAST);
+			    win.css("height", $(window).innerWidth()*win.attr(PARALLAX_DATA_WINDOW_BG_FILE_HEIGHT)/win.attr(PARALLAX_DATA_WINDOW_BG_FILE_WIDTH) +"px");
+			    win.on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function(){
 				      // Remove the transition property
-			   		   $('body').css("transition", "none");
-			   		   isAnimatingPageScroll = false;
+				      win.css("transition", "none");
 				    });
-		    var strTop = $('body').css("margin-top").toString();
-		    //alert(strTop.substring(0,strTop.length-2));
-		    $(window).scrollTop(strTop);
-		*/
-		
-		// Loop through Parallax Windows
-		for (i=0, iLen=$parallaxRegistry.length; i<iLen; i++) {
-			
-			// The Window 
-			prlxWindow = $parallaxRegistry[i];
-			
-			// Iterate each Parallax Elment Inside that Window
-			 $elementRegistry = $(prlxWindow).children(PARALLAX_CLASS_ELEMENT);
-			 for (j=0, jLen=$elementRegistry.length; j<jLen; j++) {
-				// Animate Element
-				prlxElement = $elementRegistry[j];
-			    animateParallax($(prlxElement), getAnimationInstant($(prlxWindow)));
 			}
-		}	
-	});	
+		}
+		// TODO: //REDO FULL HEIGHT PARADIGM (STILL MAKES SENSE- Especialy for phones in portrait) height(100%) width(100%)
+		// Need to force Height Though
+		else {
+
+		}
+	}
+	
+	
+	// Gets the ID that provides access to the initial states
+	function getParallaxElementId(el) {
+		auxIdClass= el.attr('class');
+		if(auxIdClass.indexOf(PARALLAX_CLASS_ELEMENT_ID_PREFIX)!= -1) {
+			auxIdClass= auxIdClass.substring(auxIdClass.indexOf(PARALLAX_CLASS_ELEMENT_ID_PREFIX));
+			auxIdClass= auxIdClass.substring(PARALLAX_CLASS_ELEMENT_ID_PREFIX.length);
+			
+			return auxIdClass;
+		}
+	}
+	
+	
 		
 	// GetAnimationInstant
 	// The animation span is over when the Parallax window fully leaves the screen OR when the document reaches its end/beginning
 	// Returns: value >= 0 && value <= 100
 	// 0   - parallaxWindow just entered/left the viewport through the BOTTOM (absolute begining of the animation)
 	// 100 - parallaxWindow just entered/left the viewport through the TOP (absolute end of the animation)
+	
 	function getAnimationInstant(parallaxWindow) {
 		
 		var val;
@@ -350,7 +469,7 @@
 		}
 		
 		else { val = 100; /*final state*/ }
-		//$(".debug").text(val);
+
 		return val;
 	}
 	
@@ -390,9 +509,9 @@
 	// Animate Element 
 	// Parameter: value >= 0 && value <= 100
 	// DOM restriction: elements will only animate if they have one or more animations defined
+	
 	function animateParallax(el, currentInstant) {
 				
-		
 		// Get Initial State Set
 		var animationInitialStates = $parallaxElementsInitialStates[getParallaxElementId(el)];
 		var animationSetString = el.attr(ANIMATION_DATA);
@@ -402,6 +521,43 @@
 		}
 	}
 	
+
+	/*
+	 *
+	 * Animate a css property of an element
+	 * Animation Format: (css property, percentageValue[0..infinity], startInstant[0..100], endInstant[0..100]
+	 * 
+	 */
+	
+	function animateElement(el, currentInstant, initialStates, animationSet) {
+		
+		var elementAnimationsArray = new Array();
+		// Go Through Each Animation
+		for (var i =0; i< initialStates.length; i++) {
+
+			var initialState = [initialStates[i][0], initialStates[i][1], initialStates[i][2]];
+			//                 cssProperty           initialValue         refPercedntage
+
+			
+			
+			var animation = getAnimationDefinitionValues(animationSet[i]);
+			
+			/*
+			 * According to the type off css property select
+			 * getPropertyValue with one of the references (SELF, PARENT-HEIGHT, PARENT-WIDTH);
+			 * 
+			 */
+			
+			//$(".debug").text(currentInstant);
+			var auxValue = getPropertyValueForPercentageBasedTransformations(el, initialState[1], currentInstant, animation.percentageValue, animation.startInstant, animation.endInstant, animation.reference);
+			elementAnimationsArray[i] = [animation.cssProperty , auxValue + "px"];
+		}
+		
+		//var auxValue= getPropertyValueForPercentageBasedTransformations(initialState, percentageValue, currentInstant, startInstant, endInstant);
+		executeCSSTransition(el, elementAnimationsArray);
+	}
+
+
 	// Get All Animations For a Particular Element
 	function getAllAnimationsForElement(el) {
 		
@@ -427,39 +583,6 @@
 		
 	}
 	
-	
-	/*
-	 *
-	 * Animate a css property of an element
-	 * Animation Format: (css property, percentageValue[0..infinity], startInstant[0..100], endInstant[0..100]
-	 * 
-	 */
-	
-	function animateElement(el, currentInstant, initialStates, animationSet) {
-		
-		var elementAnimationsArray = new Array();
-		// Go Through Each Animation
-		for (var i =0; i< initialStates.length; i++) {
-			//alert(auxAnimationInitialStates[i].toString());
-			var initialState = [initialStates[i][0], initialStates[i][1]];
-			var animation = getAnimationDefinitionValues(animationSet[i]);
-			
-			/*
-			 * According to the type off css property select
-			 * getPropertyValue with one of the references (SELF, PARENT-HEIGHT, PARENT-WIDTH);
-			 * 
-			 */
-			
-			//$(".debug").text(currentInstant);
-			var auxValue = getPropertyValueForPercentageBasedTransformations(el, initialState[1], currentInstant, animation.percentageValue, animation.startInstant, animation.endInstant, animation.reference);
-			elementAnimationsArray[i] = [animation.cssProperty , auxValue + "px"];
-
-		}
-		
-		//var auxValue= getPropertyValueForPercentageBasedTransformations(initialState, percentageValue, currentInstant, startInstant, endInstant);
-		executeCSSTransition(el, elementAnimationsArray);
-	}
-
 	/*
 	 * 
 	 * Getting a tranformed value based on a percentage base transformation (REFERING TO SELF, PARENT-HEIGHT, PARENT-WIDTH)
@@ -467,19 +590,27 @@
 	 * Corrects and normalizes current instant according to the animation interval defined
 	 * currentInstant = 0 means that the Parallax Window just entered the screen
 	 * curentInstant = 100 means that the Parallax Window just left the screen or the document reached its end
-	 *   
+	 *    
 	 */
 	
 	function getPropertyValueForPercentageBasedTransformations(el, initialState, currentInstant, animationFinalPercentage, startInstant, endInstant, referenceDimension) {
+
 		var auxFinalValue; 
 		var auxPredictedValue; 
 		var initialStateInt = parseInt(initialState);
-		
 
-		
 		currentInstant = (currentInstant - startInstant)*100 / (endInstant-startInstant);
 		switch(referenceDimension) {
 		
+			case "none":
+				// TODO: Compute this case it is important for opacity values for example 
+				// The ideia is to pass just a value could be used for pixel transformation
+				// could be:
+				//    value (animates to that value)
+				//    + value (animates from initial position to initial position + value)
+				//    - value (animates from initial position to initial position + value)
+				break;
+				
 			case "self":
 				auxFinalValue = initialStateInt * animationFinalPercentage/100;
 				auxPredictedValue = initialStateInt + (auxFinalValue - initialStateInt)/100 * currentInstant;
@@ -507,9 +638,9 @@
 		return auxPredictedValue;
 	}
 	
+	// Aplies a time based interval correction to the animation
+	// This Forces the animation to run "fully" in a preditermined "windowTime" Interval
 	function applyIntervalCorrection(currentInstant,initialStateInt,startInstant,endInstant, auxPredictedValue, auxFinalValue) {
-		
-		
 		
 		if(auxFinalValue-initialStateInt >= 0) {
 			if(auxPredictedValue >auxFinalValue) {
@@ -527,15 +658,6 @@
 				return initialStateInt;
 			}
 		}
-		/*
-		
-		if (currentInstant < startInstant) {
-			return initialStateInt;
-		}
-		else if  (currentInstant > endInstant) {
-			return auxFinalValue;
-		}
-		*/
 
 		return auxPredictedValue;
 	}

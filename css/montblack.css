@@ -39,13 +39,14 @@ footer {
 }
 
 .mb-parallax-element-lemons {
+	top:0%;
+	left:0%;
+	height: 160%;
+	width: 100%;
 	background-image: url("../imgs/cocktails/cocktail-kiwi.jpg");
 	background-repeat:no-repeat;
 	background-size: 100%;
-	height: 160%;
-	width: 100%;
-	top:0%;
-	left:0%;
+	
 }
 
 .mb-parallax-element-debug-top * { 

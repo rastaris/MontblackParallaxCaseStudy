@@ -161,11 +161,14 @@
 								
 							case "self": 
 								//this is doing self width TODO: create self height
+								
+								// Write Initial Value
 								if (isFirstRegistration) {
 									referenceValue = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxElement.width();
 									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
 									
-								}  
+								}
+								// Update Initial Value
 								else {
 									// prlxElement.width(); CANT BE used (it's not % anymore, its px and set by the animation, has to be recalculated
 									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
@@ -178,7 +181,7 @@
 								break;
 								
 							case "parent_width":
-								
+								// Write Initial Value
 								if (isFirstRegistration) {
 									// The Percentage corresponding to the  Initial State of the 
 									// elements (cssProperty) within the Parent Window Width
@@ -186,6 +189,7 @@
 									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
 								
 								}
+								// Update Initial Value
 								else {
 									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
 									newReferenceValue = referenceValue * prlxWindow.width();
@@ -196,7 +200,7 @@
 								break;
 							
 							case "parent_height":
-								
+								// Write Initial Value
 								if (isFirstRegistration) {
 									// The Percentage corresponding to the  Initial State of the 
 									// elements (cssProperty) within the Parent Window Height
@@ -204,10 +208,11 @@
 									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
 								
 								}
+								// Update Initial Value
 								else {	
 									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
 									newReferenceValue = referenceValue * prlxWindow.height();
-									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newReferenceValue, newReferenceValue];
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newReferenceValue, referenceValue];
 								}
 	
 								break;

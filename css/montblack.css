@@ -41,7 +41,7 @@ footer {
 .mb-parallax-element-lemons {
 	top:0%;
 	left:0%;
-	height: 160%;
+	height: 150%;
 	width: 100%;
 	background-image: url("../imgs/cocktails/cocktail-kiwi.jpg");
 	background-repeat:no-repeat;
@@ -129,7 +129,7 @@ footer {
  * -------------------------------- *
  */
 
-@media(max-width:767px) and (orientation:portrait) {
+@media (min-width:0px) and (max-width:767px) {
 
 	.mb-section-home {
 		 background-image: url("../imgs/branding/logo-skull.png");
@@ -153,35 +153,10 @@ footer {
 		width:100%;
 		height: 70%;
 	}	
-}
-
-@media(max-width:767px) and (orientation:landscape) {
-	
-	.mb-section-home {
-		background-size: auto 80%;
-		background-position: center 10px;
-		/*
-		max-height: 270px; 
-		min-height: 250px;
-		
-		background-color: orange;
-		*/
-	}
-	
-	.mb-separator-slogan {
-		background-image: url("../imgs/branding/slogan.png");
-		background-size: auto 100%;
-		height:70px;
-		margin-top: -35px;
-	}
-	
-    .mb-section-services {
-    	/*height: 300px;*/
-		margin-top: -35px;
-		height: 70%;
-	}	
 
 }
+
+
 
 /* 
  * -------------------------------- *

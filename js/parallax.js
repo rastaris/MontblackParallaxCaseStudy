@@ -91,8 +91,8 @@
 	// Parallax Windows and Parallax Element Registration Routine
 	
 	function registerParallaxInfo() {
-		var referenceValue;
-		var newReferenceValue;
+		var referenceCSSPropertyValuePercentage;
+		var newCSSPropertyValue;
 		//$parallaxWindowRegistry = $(PARALLAX_CLASS_WINDOW);
 		
 		for (var i=0; i<$parallaxWindowRegistry.length;i++){
@@ -108,7 +108,7 @@
 			
 			
 			// To prevent resizing in Android (fixes glich when $(window).innerHeight() changes due to the url bar showing or not)
-			if(DEVICE_IS_ANDROID) {
+			if(DEVICE_IS_ANDROID && isFirstRegistration) {
 				//Store Initial Height and Width of each window 
 				if (DEVICE_ORIENTATION == "portrait") {
 					prlxWindow.attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT, prlxWindow.width());
@@ -152,8 +152,8 @@
 							case "none":
 								
 								if (isFirstRegistration) {
-									referenceValue = -1;
-									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+									referenceCSSPropertyValuePercentage = -1;
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceCSSPropertyValuePercentage];
 								}
 								// Do Nothing (TODO: study this case deeper with examples)
 								
@@ -164,16 +164,16 @@
 								
 								// Write Initial Value
 								if (isFirstRegistration) {
-									referenceValue = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxElement.width();
-									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+									referenceCSSPropertyValuePercentage = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxElement.width();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceCSSPropertyValuePercentage];
 									
 								}
 								// Update Initial Value
 								else {
 									// prlxElement.width(); CANT BE used (it's not % anymore, its px and set by the animation, has to be recalculated
-									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
-									newReferenceValue = referenceValue * prlxWindow.width();
-									$parallaxElementsInitialStates[idNumber][k] = new Array(animationParameters.cssProperty, newReferenceValue, referenceValue);
+									referenceCSSPropertyValuePercentage = $parallaxElementsInitialStates[idNumber][k][2];
+									newCSSPropertyValue = referenceCSSPropertyValuePercentage * prlxWindow.width();
+									$parallaxElementsInitialStates[idNumber][k] = new Array(animationParameters.cssProperty, newCSSPropertyValue, referenceCSSPropertyValuePercentage);
 									
 								}
 								
@@ -185,34 +185,36 @@
 								if (isFirstRegistration) {
 									// The Percentage corresponding to the  Initial State of the 
 									// elements (cssProperty) within the Parent Window Width
-									referenceValue = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxWindow.width();
-									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+									referenceCSSPropertyValuePercentage = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxWindow.width();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceCSSPropertyValuePercentage];
 								
 								}
 								// Update Initial Value
 								else {
-									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
-									newReferenceValue = referenceValue * prlxWindow.width();
-									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newReferenceValue, referenceValue];
+									referenceCSSPropertyValuePercentage = $parallaxElementsInitialStates[idNumber][k][2];
+									newCSSPropertyValue = referenceCSSPropertyValuePercentage * prlxWindow.width();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newCSSPropertyValue, referenceCSSPropertyValuePercentage];
 									
 								}
 	
 								break;
-							
+
 							case "parent_height":
 								// Write Initial Value
 								if (isFirstRegistration) {
 									// The Percentage corresponding to the  Initial State of the 
 									// elements (cssProperty) within the Parent Window Height
-									referenceValue = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxWindow.height();
-									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceValue];
+									referenceCSSPropertyValuePercentage = prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2)/prlxWindow.height();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, prlxElement.css(animationParameters.cssProperty).substr(0,prlxElement.css(animationParameters.cssProperty).length-2), referenceCSSPropertyValuePercentage];
+									
 								
 								}
 								// Update Initial Value
 								else {	
-									referenceValue = $parallaxElementsInitialStates[idNumber][k][2];
-									newReferenceValue = referenceValue * prlxWindow.height();
-									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newReferenceValue, referenceValue];
+									
+									referenceCSSPropertyValuePercentage = $parallaxElementsInitialStates[idNumber][k][2];
+									newCSSPropertyValue = referenceCSSPropertyValuePercentage * prlxWindow.height();
+									$parallaxElementsInitialStates[idNumber][k] = [ animationParameters.cssProperty, newCSSPropertyValue, referenceCSSPropertyValuePercentage];								
 								}
 	
 								break;
@@ -232,9 +234,12 @@
 
 		}
 	
+		// Flag First Registration or Render
 		if(isFirstRegistration) {
 			isFirstRegistration = false;
-		} else {  render(); }
+		} else {  
+			render(); 
+		}
 		
 		
 	}
@@ -280,34 +285,17 @@
 		}	
 	}
 	
-	function sleep(milliseconds) {
-		  var start = new Date().getTime();
-		  for (var i = 0; i < 1e7; i++) {
-		    if ((new Date().getTime() - start) > milliseconds){
-		      break;
-		    }
-		  }
-		}
-	
 	// Resize Function
 	// This function is mostly dedicated to android browsers ( avoid unwanted document sizes generated by 
 	// the browser url Bar (that appears and disapears changing the window size)
-	// The one component that is not dedicated to android only, is : setParallaxWindowMissingDimensionForFullImg($(prlxWindow)); 
-	// TODO: 
-	// 	  - Clean the code in this function
-	// 	  - Try not to declare vars inside (because of the garbage collector)
 	//    - not fully solved (when changing orientation with the url bar gone, the dimension % is bigger 
 	//		than when the bar is present, so the content becomes to big for when the bar is present)   
 	
 	$(window).resize(function() {
 		
-		
 		//
 		// Android Resizing Corrections (overcome UX leak, resulting from the Broser URL Bar
 		//
-		
-		//Has Device Orientation Changed ? 
-		DEVICE_ORIENTATION_CHANGED = (DEVICE_ORIENTATION != getCurrentDeviceOrientation());
 
 		// Fix Dimensions ParallaxWindows
 		for (var i=0; i<$parallaxWindowRegistry.length;i++){
@@ -315,82 +303,41 @@
 			var prlxWindow = $parallaxWindowRegistry[i];
 			
 			//IF ANDROID && DEVICE ORIENTATION DOES NOT CHANGE
-			if(DEVICE_IS_ANDROID && !DEVICE_ORIENTATION_CHANGED) {
+			if(DEVICE_IS_ANDROID) {
 				// Keep always in the initial state 
 				// Prevents abrupt resizes in Android (Generated when the Browser URL bar leaves or enters the screen)
 				if (getCurrentDeviceOrientation() == "portrait") {
-					$(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT));
-					$(prlxWindow).height($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT));
-				} else if (getCurrentDeviceOrientation() == "landscape") {
-					$(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE));
-					$(prlxWindow).height($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE));
-				}
-				setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
-			}
-			//IF ANDROID && DEVICE ORIENTATION DOES CHANGE
-			else if (DEVICE_IS_ANDROID && DEVICE_ORIENTATION_CHANGED) {
-			    // Store Initial Height and Width of each window (To prevent resizing in Android)
-				// This Simulates a reload, regarding only the computation of the section sizes
-				
-				if (getCurrentDeviceOrientation() == "portrait") {
-					
-					if(!coreFunctions.isDefined($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT))
-						&& !coreFunctions.isDefined($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT))) {
-						
-						$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT, $(window).innerWidth());
-					    $(prlxWindow).width($(window).innerWidth());
-					    setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
-					    $(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT, $(prlxWindow).height());
-					    //alert("defining android PORTRAIT initial state")
+		
+					if (coreFunctions.isDefined($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT))) {
+							$(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT));
+							$(prlxWindow).height($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT));
 					}
 					else {
-						 $(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT));
-						 $(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT));
-						 setParallaxWindowMissingDimensionForFullImg($(prlxWindow)); // not needed here i believe
-						 //alert("applying android PORTRAIT initial state")
+						$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_PORTRAIT, $(window).innerWidth());					    
+					    $(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_PORTRAIT, $(prlxWindow).height());
 					}
-				    
-				
+						
 				}
 				else if (getCurrentDeviceOrientation() == "landscape") {
 					
-					if(!coreFunctions.isDefined($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE))
-							&& !coreFunctions.isDefined($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE))) {
-							
-							$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE, $(window).innerWidth());
-						    $(prlxWindow).width($(window).innerWidth());
-						    setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
-						    $(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE, $(prlxWindow).height());
-						    //alert("defining android LANDSCAPE initial state")
-						}
-						else {
-							 $(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE));
-							 $(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE));
-							 setParallaxWindowMissingDimensionForFullImg($(prlxWindow)); // not needed here i believe
-							 //alert("applying android LANDSCAPE initial state")
-						}
+					if (coreFunctions.isDefined($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE))) {
+						$(prlxWindow).width($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE));
+						$(prlxWindow).height($(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE));
+					}
+					else {
+						$(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_WIDTH_LANDSCAPE, $(window).innerWidth());
+					    $(prlxWindow).attr(PARALLAX_WINDOW_INITIAL_HEIGHT_LANDSCAPE, $(prlxWindow).height());
+					}
 				}
 			}
-			// Making sure FullScreen Elements do not occupy more or less space than they need
-			else  { 
-				setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
-			}
 			
-			//prlxWindow.width($(window).innerWidth());
+			setParallaxWindowMissingDimensionForFullImg($(prlxWindow));
 		}
-		// After all elements are fixed (if the fix resulted from android and orientation changed)
-		if (DEVICE_IS_ANDROID && DEVICE_ORIENTATION_CHANGED) {
-			DEVICE_ORIENTATION_CHANGED = false;
-			DEVICE_ORIENTATION = getCurrentDeviceOrientation();
-		}
-		
 		
 		//
 		// Re-Register Parallax info (overwrite initial animation values)
 		//
-		
 		registerParallaxInfo();
-
 		
 	});
 	

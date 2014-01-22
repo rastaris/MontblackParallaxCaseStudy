@@ -28,111 +28,118 @@
 </head>
 
 <body>
-	<!--  
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div>
-      </div>
-    </div>
-     -->
-
-	<!-- Welcome Section -->
+	
+	
+	
+	<!-- Home Section -->
+	<a name="home"></a>
 	<section class="parallax-window mb-section-home">
-	
+		<div id="logo"> </div>
 	</section>
-	<div class="mb-separator-slogan"></div>
-
-	<div class="parallax-window mb-section-services">
-		<!-- Background Elements -->
-		<div class="parallax-element mb-parallax-element-lemons" data-animations="(width,80,25,35,self);(left,34,25,45,parent_width);(top,-20,5,45,parent_width)" ></div>
-		
-		<div class="parallax-element" style="left:-100%; top:3%;" data-animations="(left,101,25,45,parent_width)">
-			<h1> Services</h1>
-			<p class="debug" style="top:0%;" >We provide high quality cocktail services when and where
-				required.</p>
-						
-			<p class="debug" style="top:90%;">We provide high quality cocktail services when and where
-				required.</p>
-		</div>
-
-
-		<!-- Foreground Elements -->
-  	</div>
 	
-  <div class="mb-section-drinks"></div>
-  <div class="parallax-window mb-section-impressions" data-full-width="true" data-bg-img-file-width="2062" data-bg-img-file-height="933"> </div>  
-  <div class="mb-section-friends"></div>
-  <div class="mb-section-contacts"></div>  
-
-	<div class="container">
-		<!-- Example row of columns -->
-		<div class="row">
-			<div class="col-md-3">
-				<h2>Heading</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce
-				</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<h2>Heading</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce
-				</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<h2>Heading</h2>
-				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
-				.</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<h2>Heading</h2>
-				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
-				.</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-		</div>
-
-		
+	<!-- Navigation -->
+	<nav class="navbar navbar-inverse" data-active="home" role="navigation"> </nav>
+	
+	<!-- Separator Mission -->
+	<section class="parallax-window mb-section-video">
+	<!-- Video Container -->
+	
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-50,20,80,parent_width)">
+		<video autoplay loop muted>
+			<source src="video/bgvideo.mp4" type="video/mp4">
+			<source src="bgvideo.webm" type="video/webm">
+		</video>
 	</div>
-    <!-- /container -->
+	</section>
+	
+	
+	<!-- Drinks Section -->
+	<a name="drinks"></a>
+	<section class="parallax-window mb-section-drinks">
+		<h1>Drinks</h1>
+	</section>
+	
+	
+	<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-section-drinks" data-active="drinks" role="navigation"> </nav>
+	
+	<!-- Separator Instagram Links #MontblackDrinks -->
+	<section class="parallax-window mb-section-video mb-section-video-drinks">
+	<!-- Video Container -->
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-50,20,80,parent_width)">
+		<video autoplay loop muted>
+			<source src="video/bgvideo.mp4" type="video/mp4">
+			<source src="bgvideo.webm" type="video/webm">
+		</video>
+	</div>
+	</section>
+	
+	
+	<!-- Services Section -->
+	<a name="services"></a>
+	<section class="parallax-window mb-section-services">
+		<h1>Services</h1>
+	</section>
+	
+	<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-section-services" data-active="services" role="navigation"> </nav>
+	
+	<!-- Separator Instagram Links #MontblackEvents -->
+	<section class="parallax-window mb-section-video mb-section-video mb-section-video-services">
+	<!-- Video Container -->
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-50,20,80,parent_width)">
+		<video autoplay loop muted>
+			<source src="video/bgvideo.mp4" type="video/mp4">
+			<source src="bgvideo.webm" type="video/webm">
+		</video>
+	</div>
+	</section>
+	
+	<!-- Friends Section -->
+	<a name="friends"></a>
+	<section class="parallax-window mb-section-friends"> 
+		<h1>Friends</h1>
+	</section>
 
-    
-	    <footer>
-			<p id="ft">&copy; MontBlack Cocktail Experiments - A Responsive Parallax Case Study By Tiago Reis </p>
-		</footer>
+	<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-section-friends" data-active="friends" role="navigation"> </nav>
+	
+	<!-- Separator Instagram/Facebook #MontblackFriends -->
+	<section class="parallax-window mb-section-video mb-section-video-friends">
+	<!-- Video Container -->
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-50,20,80,parent_width)">
+		<video autoplay loop muted>
+			<source src="video/bgvideo.mp4" type="video/mp4">
+			<source src="bgvideo.webm" type="video/webm">
+		</video>
+	</div>
+	</section>
+	
+  <!-- Contacts Section -->
+  <a name="contacts"></a>
+  <section class="parallax-window mb-section-contacts">
+  	<h1>Contact</h1>
+  </section>  
 
+ 
+ <!-- Navigation -->
+ <nav class="navbar navbar-inverse navbar-section-contacts" data-active="contacts" role="navigation"> </nav>
+   
+
+  
+  <!-- Footer -->
+  
+  <!-- 
+   <footer>
+	 <p id="ft">&copy; MontBlack Cocktail Experiments </p>
+	  
+   </footer>
+  -->
+   
+   
+   
+   
+   
 	<!-- Bootstrap core JavaScript -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -140,6 +147,134 @@
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Parallax JavaScript -->
 	<script src="js/parallax.js"></script>
-
+	<script>
+	 $(function() {
+			
+		 
+		 	//NAVVV
+		 	$(".navbar").each(function () { 
+		 		alert($(this).attr("data-active"));
+		 		
+		 		activeString = "class='active'";
+		 		unactiveString = "";
+		 		
+		 		$(this).append(
+		 			 "<!-- Brand and toggle get grouped for better mobile display -->"
+		 			+"<div class='navbar-header'>"
+		 			/*+    "<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1'>"
+		 			+      "<span class='sr-only'>Toggle navigation</span>"
+		 			+      "<span class='icon-bar'></span>"
+		 			+      "<span class='icon-bar'></span>"
+		 			+      "<span class='icon-bar'></span>"
+		 			+    "</button>"*/
+		 			+    "<a class='navbar-brand' href='#''>montblack</a>"
+		 			+  "</div>"
+		 			
+		 			+  "<!-- Collect the nav links, forms, and other content for toggling -->"
+		 			+  "<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>"
+		 			+    "<ul class='nav navbar-nav navbar-right'>"
+		 			+      "<li "+ (($(this).attr("data-active") == "home")?activeString:unactiveString) +"><a class='menu-link' href='#home'>Home</a></li>"
+		 			+      "<li "+ (($(this).attr("data-active") == "drinks")?activeString:unactiveString) +"><a class='menu-link' href='#drinks'>Drinks</a></li>"
+		 			+      "<li "+ (($(this).attr("data-active") == "services")?activeString:unactiveString) +"><a class='menu-link' href='#services'>Services</a></li>"
+		 			+      "<li "+ (($(this).attr("data-active") == "friends")?activeString:unactiveString) +"><a class='menu-link' href='#friends'>Friends</a></li>"
+		 			+      "<li "+ (($(this).attr("data-active") == "contacts")?activeString:unactiveString) +"><a class='menu-link' href='#contacts'>Contact</a></li>"
+		 			+    "</ul>"
+		 			+  "</div><!-- /.navbar-collapse -->"		
+		 		);
+		 	});
+		 	 // Substitute regular anchors with scroll to animation
+		 	 $('a[href*=#]:not([href=#])').click(function() {
+		 		    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+		 		      var target = $(this.hash);
+		 		      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+		 		      if (target.length &&  $(".mb-section-" + this.hash.slice(1)).length) {
+		 		        $('html,body').animate({
+		 		          scrollTop: $(".mb-section-" + this.hash.slice(1)).offset().top 
+		 		        }, 1000);
+		 		        return false;
+		 		      }
+		 		    }
+		 		  });
+		 
+		 	
+		 	//END NAV
+		 
+			
+		
+			// IE detect
+			function iedetect(v) {
+		
+			    var r = RegExp('msie' + (!isNaN(v) ? ('\\s' + v) : ''), 'i');
+				return r.test(navigator.userAgent);
+					
+			}
+		
+			// For mobile screens, just show an image called 'poster.jpg'. Mobile
+			// screens don't support autoplaying videos, or for IE.
+			if(screen.width < 800 || iedetect(8) || iedetect(7) || 'ontouchstart' in window) {
+			
+				(adjSize = function() { // Create function called adjSize
+					
+					$width = $('#bg-video-container').width(); // Width of the screen
+					$height = $('#bg-video-container').height(); // Height of the screen
+					
+					// Resize image accordingly
+					$('#bg-video-container').css({
+						'background-image' : 'url(poster.jpg)', 
+						'background-size' : 'cover', 
+						'width' : $width+'px', 
+						'height' : $height+'px'
+					});
+					
+					// Hide video
+					$('video').hide();
+					
+				})(); // Run instantly
+				
+				// Run on resize too
+				$(window).resize(adjSize);
+			}
+			else {
+		
+				// Wait until the video meta data has loaded
+				$('#bg-video-container video').on('loadedmetadata', function() {
+					
+					var $width, $height, // Width and height of screen
+						$vidwidth = this.videoWidth, // Width of video (actual width)
+						$vidheight = this.videoHeight, // Height of video (actual height)
+						$aspectRatio = $vidwidth / $vidheight; // The ratio the video's height and width are in
+								
+					(adjSize = function() { // Create function called adjSize
+									
+						$width = $('#bg-video-container').width(); // Width of the screen
+						$height = $('#bg-video-container').height(); // Height of the screen
+									
+						$boxRatio = $width / $height; // The ratio the screen is in
+									
+						$adjRatio = $aspectRatio / $boxRatio; // The ratio of the video divided by the screen size
+									
+						// Set the container to be the width and height of the screen
+						$('#bg-video-container').css({'width' : $width+'px', 'height' : $height+'px'}); 
+									
+						if($boxRatio < $aspectRatio) { // If the screen ratio is less than the aspect ratio..
+							// Set the width of the video to the screen size multiplied by $adjRatio
+							$vid = $('#bg-video-container video').css({'width' : $width*$adjRatio+'px'}); 
+						} else {
+							// Else just set the video to the width of the screen/container
+							$vid = $('#bg-video-container video').css({'width' : $width+'px'});
+						}
+										 
+					})(); // Run function immediately
+								
+					// Run function also on window resize.
+					$(window).resize(adjSize);
+								
+				});
+			}
+			
+		});
+	</script>
 </body>
 </html>
+
+

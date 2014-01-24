@@ -1,9 +1,10 @@
+*{padding:0;margin:0;}
 
-/*
+/************************************************************************************************************************** 
  *
  * TYPOGRAPHY
  *
- */
+ **************************************************************************************************************************/
 
 @font-face {
     font-family: 'ecstasyregular';
@@ -25,24 +26,19 @@ h1 {
 	text-align: center;
 	width:3.5em;
 	background-color: #000;
-	margin: 2% auto;
+	margin-top: 2%;
+	marigin-right: 0%;
 	padding-top: 0.2em;
+	
 }
 
-/*
+/**************************************************************************************************************************
  *
  * OVERWRITES
  *
- */
+ **************************************************************************************************************************/
 
-/* Ovewrite bg color for parallax windows */
-
-.parallax-window {
-	position:relative;
-	background-image: url("../imgs/bg/sectionBGHighContrast.jpg");
-	background-color: #090909;
-	z-index:-1;
-}
+/* Navigation  */
 
 .navbar {
 	border: none;
@@ -71,21 +67,72 @@ h1 {
 	
 }
 
-.active {
-	background-color: #600735;
+/* Ovewrite bg for parallax windows */
+
+.parallax-window {
+	position:relative;
+	background-image: url("../imgs/bg/sectionBGHighContrast.jpg");
+	background-color: #090909;
+	z-index:-1;
+	background-repeat: no-repeat;
 }
 
-/*
+/* Disable image selection */
+img {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+
+/**************************************************************************************************************************
+ *
+ * SOCIAL
+ *
+ **************************************************************************************************************************/
+.instagramWidget {
+	border: none;
+	
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 20.5%;
+	left: 0;
+}
+
+
+
+/**************************************************************************************************************************
  *
  * VIDEO SEPARATORS
  *
- */
+ **************************************************************************************************************************/
  
 .mb-section-video {
 	position:relative;
 	height: 53%;
 	background-image: none;
 	top:-10%; /* Compensate the Menu Bar*/
+	
+}
+
+.mb-section-video .slogan {
+	width:90%;
+	text-align: center;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 2em;
+	font-weight:600;
+	color: #fff;
+	position:absolute;
+    left:5%;
+    top:45%;
+    	
+}
+
+.mb-section-video .slogan-services {
+	top:40%;
 }
 
 .mb-parallax-element-video {
@@ -93,39 +140,55 @@ h1 {
 	left:0%;
 }
  
+ .horizontal-lines-overlay, 
+ .vertical-lines-overlay
+ {
+ 	height: 100%;
+ 	width: 100%;
+ 	opacity: 0.7;
+ }
+ 
+ .horizontal-lines-overlay {
+ 	background-image: url("../imgs/bg/patternHorizontalLines.png");
+ } 
+ .vertical-lines-overlay {
+ 	background-image: url("../imgs/bg/patternVerticallLines.png");
+ }
+ 
 
 #bg-video-container {
 	z-index:-1;
 	width: 150%;
 	height: 100%;
-	left:-35%;
+	left:0%;
 	
 }
 
-/*
+/**************************************************************************************************************************
  *
  * HOME SECTION
  *
- */
+ **************************************************************************************************************************/
 
 .mb-section-home {
 
 }
+
 .mb-section-home #logo {
 	width:34%;
-	height:100%;
-	margin: 3% auto;
-	background-image: url("../imgs/branding/logo.png");
-	background-repeat:no-repeat;
-	background-size: 100%;
+	/* Center Horizontally and Vertically */
+	position:absolute;
+    left:0; right:0;
+    top:0; bottom:0;
+    margin:auto;	
 }
 
 
-/*
+/**************************************************************************************************************************
  *
  * DRINKS SECTION
  *
- */
+ **************************************************************************************************************************/
  
 .mb-section-drinks {
 	top:-10%; /* Compensate the Menu Bar*/
@@ -140,11 +203,11 @@ h1 {
 }
 
 
-/*
+/**************************************************************************************************************************
  *
  * SERVICES SECTION
  *
- */
+ **************************************************************************************************************************/
 
 
 .mb-section-services {
@@ -159,27 +222,11 @@ h1 {
 	top:-30%;
 }
 
-.mb-parallax-element-lemons {
-	top:0%;
-	left:0%;
-	height: 150%;
-	width: 100%;
-	background-image: url("../imgs/cocktails/cocktail-kiwi.jpg");
-	background-repeat:no-repeat;
-	background-size: 100%;
-	
-}
-
-
-.mb-parallax-element-content-type-1 h1 { 
-	font-size: 4em;
-}
-
-/*
+/**************************************************************************************************************************
  *
  * FRIENDS SECTION
  *
- */
+ **************************************************************************************************************************/
 
 .mb-section-friends {
 	top:-30%; /* Compensate the Menu Bar*/
@@ -190,7 +237,8 @@ h1 {
 }
 
 .mb-section-video-friends {
-	top:-40%;
+	top:-40.1%;
+	height: 100%;
 
 }
 .mb-section-friends-dummy-content {
@@ -202,77 +250,33 @@ h1 {
 	
 }
  
- /*
+/**************************************************************************************************************************
  *
  * CONTACTS SECTION
  *
- */
+ **************************************************************************************************************************/
 
 .mb-section-contacts {
-	top:-40%; /* Compensate the Menu Bar*/
-	background-image: url("../imgs/bg/sectionContactsBG.jpg");
-	background-position: center;
-	background-repeat:no-repeat;
-	background-size: 100%;
+	top:-40.1%; /* Compensate the Menu Bar*/
 }
 .navbar-section-contacts {
-	top:-40.1%;
-	
-}
-.mb-section-video-contacts {
-	top:-50%;
-
+	top:-40.2%;
+	opacity: 1;
 }
 
-/*
- *
- * FOOTER
- *
- */
-footer {
-	
-	top:-10%; /* Compensate the Menu Bar*/
-	background-color: #6e1d52;
-	color: #FFF;
-	height:16%;
-	padding:0.5%%;
-	text-align: center;
-	}
-	
 #skull {
+	width: 26%;
+	opacity: 0.8;
+	/* Center Horizontally and Vertically */
+	position:absolute;
+    left:0; right:0;
+    top:0; bottom:0;
+    margin:auto;	
 	
-	width:22%;
-	height:200%;	
-	margin: -26% auto;
-	background-image: url("../imgs/branding/large_skull.png");
-	background-repeat:no-repeat;
-	background-size: 100%;
-	background-position: center;
-} 
-
-
-.mb-section-services2 {
-	height: 400px;
-}
-
-.mb-separator-slogan {
-	background-image: url("../imgs/branding/slogan.png");
-	height:143px;
-	margin-top: -71px;
-	position:relative;
-	z-index: 1;
 }
 
 
-.mb-section-black {
-	background-color: #000;
-	color: #fff;
-}
 
-.mb-section-white {
-	background-color: #fff;
-	color: #000;
-}
 
 /*
  * -------------------------------- *

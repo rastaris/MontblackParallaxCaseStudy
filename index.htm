@@ -4,11 +4,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+<meta name="description" content="Montblack, Cocktail Experiments">
+<meta name="author" content="Liquid Design">
+<link rel="shortcut icon" href="imgs/ico/favicon.ico">
 
 <title>Montblack - Cocktail Experiments</title>
+
+<!-- Secondary Font -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'>
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -29,27 +32,31 @@
 
 <body>
 	
-	
-	
 	<!-- Home Section -->
 	<a name="home"></a>
 	<section class="parallax-window mb-section-home">
-		<div id="logo"> </div>
+		 <img id="logo" alt="logo" src="imgs/branding/logo.png" width="100%"/> 
 	</section>
 	
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse" data-active="home" role="navigation"> </nav>
 	
 	<!-- Separator Mission -->
-	<section class="parallax-window mb-section-video">
+	<section class="parallax-window mb-section-video mb-section-video-home">
 	<!-- Video Container -->
-	
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-50,20,80,parent_width)">
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-30,20,80,parent_width)">
 		<video autoplay loop muted>
-			<source src="video/bgvideo.mp4" type="video/mp4">
-			<source src="bgvideo.webm" type="video/webm">
+			<source src="video/homeVideoBgComp.mp4" type="video/mp4">
+			<source src="video/homeVideoBgComp.webm" type="video/webm">
 		</video>
 	</div>
+	<!-- lines overlaying video -->
+	<div class="horizontal-lines-overlay"> </div>
+	<div class="slogan"> 
+		we offer personal high quality cocktail services <br/> for private events, corporate events 
+		and special occasions.
+	</div>
+	
 	</section>
 	
 	
@@ -66,12 +73,14 @@
 	<!-- Separator Instagram Links #MontblackDrinks -->
 	<section class="parallax-window mb-section-video mb-section-video-drinks">
 	<!-- Video Container -->
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-30,0,80,parent_width);(left,10,0,80,parent_width)">
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-30,0,80,parent_width)">
 		<video autoplay loop muted>
-			<source src="video/bgvideo.mp4" type="video/mp4">
-			<source src="bgvideo.webm" type="video/webm">
+			<source src="video/drinksVideoBgComp.mp4" type="video/mp4">
+			<source src="video/drinksVideoBgComp.webm" type="video/webm">
 		</video>
 	</div>
+	<!-- lines overlaying video -->
+	<div class="vertical-lines-overlay"> </div>
 	</section>
 	
 	
@@ -87,13 +96,22 @@
 	<!-- Separator Instagram Links #MontblackEvents -->
 	<section class="parallax-window mb-section-video mb-section-video mb-section-video-services">
 	<!-- Video Container -->
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(left,35,0,70,parent_width)">
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-35,0,70,parent_width)">
 		<video autoplay loop muted>
-			<source src="video/bgvideo.mp4" type="video/mp4">
-			<source src="bgvideo.webm" type="video/webm">
+			<source src="video/servicesVideoBgComp.mp4" type="video/mp4">
+			<source src="video/servicesVideoBgComp.webm" type="video/webm">
 		</video>
 	</div>
+	<!-- lines overlaying video -->
+	<div class="horizontal-lines-overlay"> </div>
+	<div class="slogan slogan-services"> 
+		we create an original contemporary space inside your event <br/> 
+		where traditional cocktail recipes become as exclusive  <br/> 
+		as our own original creations.
+	</div>
 	</section>
+	
+	
 	
 	<!-- Friends Section -->
 	<a name="friends"></a>
@@ -107,18 +125,25 @@
 	<!-- Separator Instagram/Facebook #MontblackFriends -->
 	<section class="parallax-window mb-section-video mb-section-video-friends">
 	<!-- Video Container -->
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-50,20,80,parent_width)">
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-10,20,80,parent_width)">
 		<video autoplay loop muted>
-			<source src="video/bgvideo.mp4" type="video/mp4">
-			<source src="bgvideo.webm" type="video/webm">
+			<source src="video/friendsVideoBgComp.mp4" type="video/mp4">
+			<source src="video/friendsVideoBgComp.webm" type="video/webm">
 		</video>
 	</div>
+	<!-- lines overlaying video -->
+	<div class="horizontal-lines-overlay"> </div>
+	
+	<!-- www.intagme.com --> 
+    <iframe class="instagramWidget"  src="http://www.intagme.com/in/?u=Y29jYWNvbGF8aW58MjAwfDV8Mnx8bm98NjB8dW5kZWZpbmVk"  allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;" ></iframe>
+	
 	</section>
 	
   <!-- Contacts Section -->
   <a name="contacts"></a>
   <footer class="parallax-window mb-section-contacts">
   	<h1>Contact</h1>
+  	<img id="skull" alt="logo" src="imgs/branding/large_skull.png" width="100%"/>
   </footer>  
 
  
@@ -150,11 +175,28 @@
 	<script>
 	 $(function() {
 			
+		 	//// SLOGANS
+		 	$(".slogan").hide();
+		 	$(window).scroll(function () { 
+		 		$(".slogan").each(function () {
+		 			// Force this animation to happen only once
+		 			if (!($(this).is(':visible')) ) {
+			 			$(this).show();
+			 			var offset = $(this).offset().top;
+			 			var h = $(this).height();
+			 			$(this).hide();
+			 			
+			 			// Animation Trigger
+			 			if (window.pageYOffset + $(window).innerHeight() > $(this).parent().offset().top + $(this).parent().height() - $(this).parent().height()*0.2 ) {
+			 				$(this).fadeIn(700);
+			 			} 
+		 			}
+		 		});	
+		 	});
+		 
 		 
 		 	//NAVVV
 		 	$(".navbar").each(function () { 
-		 		alert($(this).attr("data-active"));
-		 		
 		 		activeString = "class='active'";
 		 		unactiveString = "";
 		 		
@@ -167,7 +209,7 @@
 		 			+      "<span class='icon-bar'></span>"
 		 			+      "<span class='icon-bar'></span>"
 		 			+    "</button>"*/
-		 			+    "<a class='navbar-brand' href='#''>montblack</a>"
+		 			+    "<a class='navbar-brand' href='#home''>montblack</a>"
 		 			+  "</div>"
 		 			
 		 			+  "<!-- Collect the nav links, forms, and other content for toggling -->"
@@ -187,22 +229,53 @@
 		 		    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 		 		      var target = $(this.hash);
 		 		      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-		 		      if (target.length &&  $(".mb-section-" + this.hash.slice(1)).length) {
-		 		        $('html,body').animate({
-		 		          scrollTop: $(".mb-section-" + this.hash.slice(1)).offset().top 
-		 		        }, 1000);
+		 		      var hashCode = this.hash.slice(1);
+		 		      
+		 		      if (target.length &&  $(".mb-section-" + hashCode).length) {
+		 		    	 
+		 		    	 /* if the slogan on a particular section is invisible 
+		 		    	  * and the user is accessing that section via menu
+		 		    	  * than instead of fading in the slogan as we do for scrolling users
+		 		    	  * we just make the element visible
+		 		    	 */ 
+		 		    	 if (hashCode=="drinks") {
+		 		    		 if(!($($(".mb-section-video-home").find(".slogan")[0]).is(":visible"))) {
+				 					$($(".mb-section-video-home").find(".slogan")[0]).show();
+				 	 		 }
+		 		    	 }
+		 		    	 else if (hashCode=="friends") {
+		 		    		 if(!($($(".mb-section-video-services").find(".slogan")[0]).is(":visible"))) {
+				 					$($(".mb-section-video-services").find(".slogan")[0]).show();
+				 	 		 }
+		 		    	 }
+		 		    	
+		 		    	  
+		 		    	 // Animate Scroll is separated otherwise the callback is called twice
+		 		    	 
+		 		    	 $('body').animate({
+			 		          scrollTop: $(".mb-section-" + this.hash.slice(1)).offset().top 
+			 		        }, 1000); 
+		 		    	  
+		 		    	  $('html').animate({
+			 		          scrollTop: $(".mb-section-" + this.hash.slice(1)).offset().top 
+			 		        }, 1000, function () { history.pushState({code:hashCode}, '', window.location.href); });
 		 		        return false;
 		 		      }
 		 		    }
 		 		  });
-		 
 		 	
+		 	 
 		 	//END NAV
-		 
+		 	window.onpopstate = function(event) {
+	 		    var section =  coreFunctions.isDefined(event.state)?event.state.code:"home";  				
+	 		    $('html, body').stop().animate({
+	 		        	  scrollTop: $(".mb-section-" + section).offset().top 
+	 		        }, 1000);
+		 	};
 			
 		
 			// IE detect
-			function iedetect(v) {
+			/*function iedetect(v) {
 		
 			    var r = RegExp('msie' + (!isNaN(v) ? ('\\s' + v) : ''), 'i');
 				return r.test(navigator.userAgent);
@@ -270,7 +343,7 @@
 					$(window).resize(adjSize);
 								
 				});
-			}
+			}*/
 			
 		});
 	</script>

@@ -1,4 +1,5 @@
-*{padding:0;margin:0;}
+* { padding:0; margin:0; }
+
 
 /************************************************************************************************************************** 
  *
@@ -55,6 +56,7 @@ h1 {
 	margin:0;
 	height:10%;
 	overflow: hidden;
+	
 }
 
 .navbar-brand {
@@ -77,8 +79,12 @@ h1 {
 	background-repeat: no-repeat;
 }
 
+.mb-section-video {
+	background-image: none;
+}
+
 /* Disable image selection */
-img {
+* {
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -138,6 +144,7 @@ img {
 .mb-parallax-element-video {
 	top:0%;
 	left:0%;
+	background-repeat: no-repeat;
 }
  
  .horizontal-lines-overlay, 
@@ -150,6 +157,7 @@ img {
  
  .horizontal-lines-overlay {
  	background-image: url("../imgs/bg/patternHorizontalLines.png");
+ 	
  } 
  .vertical-lines-overlay {
  	background-image: url("../imgs/bg/patternVerticallLines.png");
@@ -238,7 +246,6 @@ img {
 
 .mb-section-video-friends {
 	top:-40.1%;
-	height: 100%;
 
 }
 .mb-section-friends-dummy-content {
@@ -292,24 +299,13 @@ img {
 		 background-image: url("../imgs/branding/logo-skull.png");
 		 background-size: auto 90%;
 		 background-position: center 10px;
-		 /*background-color: red;*/
+		 background-color: red;
 		 /*height: 90%;*/
  	}
 	
-	.mb-separator-slogan {
-		background-image: url("../imgs/branding/slogan.png");
-		background-size: auto 100%;
-		height:100px;
-		margin-top: -50px;
+	.parallax-window {
+		background-image: url("../imgs/bg/landscape/max767/sectionBGHighContrast.jpg");
 	}
-	
-	.mb-section-services {
-		margin-top: -50px;
-		background-position: center;
-		background-size: 100%;
-		width:100%;
-		height: 70%;
-	}	
 
 }
 
@@ -327,20 +323,32 @@ img {
 	.mb-section-logo {
 		/*background-color: yellow;*/
 	}
+   .parallax-window {
+		background-image: url("../imgs/bg/landscape/max992/sectionBGHighContrast.jpg");
+	}
 }
 
 
-/* L Devices -  Small Laptops - Tablets Landscape */
+/* M Devices -  Small Laptops - Tablets Landscape */
 @media(min-width:992px){
 	.mb-section-logo {
 		/*background-color: green;*/
 	}
+	.parallax-window {
+		background-image: url("../imgs/bg/landscape/max1200/sectionBGHighContrast.jpg");
+	}
 }
 
-/* XL Devices - Computer Screens */
+/* L Devices - Computer Screens */
 @media(min-width:1200px){
 	.mb-section-logo {
 		/*background-color: blue;*/
 	}
-	
+	.parallax-window {
+		background-image: url("../imgs/bg/landscape/max1440/sectionBGHighContrast.jpg");
+	}
+	.mb-section-video {
+		background-image: none;
+	}
+
 }

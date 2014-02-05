@@ -135,6 +135,14 @@ coreFunctions = {
             url = this.BASE_URL + url.substring(2);
         }
         return url;
+    },
+    
+    //
+    // Check Mobile Environment
+    //
+    
+    isMobile: function() {
+    	return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)); 
     }
 
     

@@ -5,6 +5,7 @@ html, body { height: 100%; }
 	width: 100%;
 	height:90%; /* By default parallax windows will be full screen - almost to show that there is scrolling */
 	z-index:-1; /* So that elements outside the window stay on top of it when needed */
+	 
 }
 
 .parallax-element,

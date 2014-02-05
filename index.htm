@@ -3,23 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="description" content="Montblack, Cocktail Experiments">
 <meta name="author" content="Liquid Design">
 <link rel="shortcut icon" href="imgs/ico/favicon.ico">
-
 <title>Montblack - Cocktail Experiments</title>
 
-<!-- Secondary Font -->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'>
 
+
+<!-- Web Fonts --------------------------------------------->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'>
+<!-- ---- -------------------------------------------------->
+
+
+<!-- CSS -------------------------------------------------->
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
 <!-- Custom styles for the parallax plug-in -->
 <link href="css/parallax.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="css/montblack.css" rel="stylesheet">
-
+<!-- --- -------------------------------------------------->
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -29,10 +33,12 @@
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 
 </head>
-
 <body>
 	
-	<!-- Home Section -->
+	<!-- Home Section ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	
 	<a name="home"></a>
 	<section class="parallax-window mb-section-home">
 		 <img id="logo" alt="logo" src="imgs/branding/logo.png" width="100%"/> 
@@ -43,26 +49,29 @@
 	
 	<!-- Separator Mission -->
 	<section class="parallax-window mb-section-video mb-section-video-home">
-	<!-- Video Container -->
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-30,20,80,parent_width)">
-		<video autoplay loop muted>
-			<source src="video/homeVideoBgComp.mp4" type="video/mp4">
-			<source src="video/homeVideoBgComp.webm" type="video/webm">
-		</video>
-	</div>
-	<!-- lines overlaying video -->
-	<div class="horizontal-lines-overlay"> </div>
-	<div class="slogan"> 
-		we offer personal high quality cocktail services <br/> for private events, corporate events 
-		and special occasions.
-	</div>
-	
+		<!-- Video Container -->
+		<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-20,20,80,parent_width)" data-animations-fallback-img="(top,-20,20,50,parent_width);(left,-50,10,100,parent_width)" data-fallback-img="video/homeVideoBgComp.jpg">
+			<video autoplay loop muted>
+				<source src="video/homeVideoBgComp.mp4" type="video/mp4">
+				<source src="video/homeVideoBgComp.webm" type="video/webm">
+			</video>
+		</div>
+		<!-- lines overlaying video -->
+		<div class="horizontal-lines-overlay"> </div>
+		<div class="slogan"> 
+			we offer personal high quality cocktail services <br/> for private events, corporate events 
+			and special occasions.
+		</div>
 	</section>
 	
 	
-	<!-- Drinks Section -->
+	<!-- Drinks Section ---------------------------------------------------------------------------->
+	<!-- ............ ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	
 	<a name="drinks"></a>
-	<section class="parallax-window mb-section-drinks">
+	<section class=" parallax-window mb-section-drinks">
 		<h1>Drinks</h1>
 	</section>
 	
@@ -73,18 +82,26 @@
 	<!-- Separator Instagram Links #MontblackDrinks -->
 	<section class="parallax-window mb-section-video mb-section-video-drinks">
 	<!-- Video Container -->
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-30,0,80,parent_width)">
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,10,0,80,parent_width)" data-animations-fallback-img="(top,-20,20,50,parent_width);(left,-50,10,100,parent_width)" data-fallback-img="video/drinksVideoBgComp.jpg">
+		<!-- 
 		<video autoplay loop muted>
 			<source src="video/drinksVideoBgComp.mp4" type="video/mp4">
 			<source src="video/drinksVideoBgComp.webm" type="video/webm">
 		</video>
+		 -->
 	</div>
 	<!-- lines overlaying video -->
 	<div class="vertical-lines-overlay"> </div>
 	</section>
 	
 	
-	<!-- Services Section -->
+	
+	
+	<!-- Services Section -------------------------------------------------------------------------->
+	<!-- ............ ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	
 	<a name="services"></a>
 	<section class="parallax-window mb-section-services">
 		<h1>Services</h1>
@@ -96,7 +113,7 @@
 	<!-- Separator Instagram Links #MontblackEvents -->
 	<section class="parallax-window mb-section-video mb-section-video mb-section-video-services">
 	<!-- Video Container -->
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-35,0,70,parent_width)">
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-35,0,70,parent_width)" data-animations-fallback-img="(top,-20,20,50,parent_width);(left,-50,10,100,parent_width)" data-fallback-img="video/servicesVideoBgComp.jpg">
 		<video autoplay loop muted>
 			<source src="video/servicesVideoBgComp.mp4" type="video/mp4">
 			<source src="video/servicesVideoBgComp.webm" type="video/webm">
@@ -113,7 +130,12 @@
 	
 	
 	
-	<!-- Friends Section -->
+	<!-- Friends Section --------------------------------------------------------------------------->
+	<!-- ............ ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	<!-- ............ ------------------------------------------------------------------------------>
+	
+	
 	<a name="friends"></a>
 	<section class="parallax-window mb-section-friends"> 
 		<h1>Friends</h1>
@@ -125,7 +147,7 @@
 	<!-- Separator Instagram/Facebook #MontblackFriends -->
 	<section class="parallax-window mb-section-video mb-section-video-friends">
 	<!-- Video Container -->
-	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-10,20,80,parent_width)">
+	<div id="bg-video-container"  class="parallax-element mb-parallax-element-video"  data-animations="(top,-10,20,80,parent_width)" data-animations-fallback-img="(top,-20,20,50,parent_width);(left,-50,10,100,parent_width)" data-fallback-img="video/friendsVideoBgComp.jpg">
 		<video autoplay loop muted>
 			<source src="video/friendsVideoBgComp.mp4" type="video/mp4">
 			<source src="video/friendsVideoBgComp.webm" type="video/webm">
@@ -135,11 +157,17 @@
 	<div class="horizontal-lines-overlay"> </div>
 	
 	<!-- www.intagme.com --> 
-    <iframe class="instagramWidget"  src="http://www.intagme.com/in/?u=Y29jYWNvbGF8aW58MjAwfDV8Mnx8bm98NjB8dW5kZWZpbmVk"  allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;" ></iframe>
+    <iframe id="iframe" class="instagramWidget"  src="http://www.intagme.com/in/?u=Y29jYWNvbGF8aW58MjAwfDV8Mnx8bm98NjB8dW5kZWZpbmVk"  allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;" ></iframe>
+    
 	
 	</section>
 	
-  <!-- Contacts Section -->
+  <!-- Contacts Section ---------------------------------------------------------------------------->
+  <!-- ............ -------------------------------------------------------------------------------->
+  <!-- ............ -------------------------------------------------------------------------------->
+  <!-- ............ -------------------------------------------------------------------------------->
+  
+  
   <a name="contacts"></a>
   <footer class="parallax-window mb-section-contacts">
   	<h1>Contact</h1>
@@ -149,35 +177,29 @@
  
  <!-- Navigation -->
  <nav class="navbar navbar-inverse navbar-section-contacts" data-active="contacts" role="navigation"> </nav>
-   
-
-  
-  <!-- Footer -->
-  
-  <!-- 
-   <footer>
-	 <p id="ft">&copy; MontBlack Cocktail Experiments </p>
-	  
-   </footer>
-  -->
-   
-   
-   
-   
-   
+ 
+ 
+ 
+ 
+  <!-- Java Script --------------------------------------------------------------------------------->
+  <!-- ............ -------------------------------------------------------------------------------->
+  <!-- ............ -------------------------------------------------------------------------------->
+  <!-- ............ -------------------------------------------------------------------------------->
+ 
+ 
 	<!-- Bootstrap core JavaScript -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="js/coreFunctions.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<!-- Parallax JavaScript -->
-	<script src="js/parallax.js"></script>
+	
 	<script>
 	 $(function() {
+		 
 			
 		 	//// SLOGANS
 		 	$(".slogan").hide();
-		 	$(window).scroll(function () { 
+		 	$(window).scroll(function () {
 		 		$(".slogan").each(function () {
 		 			// Force this animation to happen only once
 		 			if (!($(this).is(':visible')) ) {
@@ -266,11 +288,16 @@
 		 	
 		 	 
 		 	//END NAV
+		 	// history 
 		 	window.onpopstate = function(event) {
-	 		    var section =  coreFunctions.isDefined(event.state)?event.state.code:"home";  				
+		 		event.preventDefault();
+		 		var section =  coreFunctions.isDefined(event.state)?event.state.code:"home";
+	 		   
 	 		    $('html, body').stop().animate({
 	 		        	  scrollTop: $(".mb-section-" + section).offset().top 
 	 		        }, 1000);
+	 		    
+	 		    return false;
 		 	};
 			
 		
@@ -345,8 +372,45 @@
 				});
 			}*/
 			
+
 		});
+	 
 	</script>
+	
+	<script>
+	
+	if(coreFunctions.isMobile()) {
+		
+		// Remove Videos on Mobile and substitute them with pic in data-fallback
+		$(".mb-section-video").each(function () { 
+
+			var videoSection = $(this);
+			$(this).find(".mb-parallax-element-video").each(function () {
+				
+				if(coreFunctions.isDefined($(this).attr("data-fallback-img"))) {
+					// set fallback image as bg for the div
+					$(this).css("background-image", "url('"+ $(this).attr("data-fallback-img") +"')" );
+					$(this).css("background-size","cover");
+					// define div size if needed (TODO::: SHOULDNT)
+					$(this).height($(this).height()*2);
+					
+					// set fallback animation (TODO::: SUBSTITUTE ATTR FOR CONSTANTS)
+					if(coreFunctions.isDefined($(this).attr("data-animations-fallback-img"))) {
+						$(this).attr("data-animations", $(this).attr("data-animations-fallback-img"));
+					}
+				}
+				$(this).html("");
+			});
+		});
+
+	}
+	
+
+     </script>
+	
+	<!-- Parallax JavaScript -->
+	<script src="js/parallax.js"></script>
+	
 </body>
 </html>
 
